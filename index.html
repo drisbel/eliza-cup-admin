@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -31,9 +33,10 @@
   --d3a: #6aa84f;
   --d3b: #274e13;
 
-  --waitlist: #4b4b4b;
+  --waitlist: #555555;
   --infill: #806f00;
-  --notreturning: #3b3b3b;
+
+  --notplaying: #4a1111;
 
 }
 
@@ -109,7 +112,7 @@ button {
     auto;
 
   padding:
-    9px 14px;
+    8px 12px;
 
   display:
     flex;
@@ -132,10 +135,13 @@ button {
     var(--yellow);
 
   font-size:
-    20px;
+    21px;
 
   font-weight:
-    900;
+    950;
+
+  letter-spacing:
+    -.4px;
 
 }
 
@@ -217,7 +223,7 @@ button {
     #000;
 
   font-weight:
-    900;
+    950;
 
 }
 
@@ -280,7 +286,7 @@ button {
     auto;
 
   padding:
-    10px 12px 28px;
+    9px 10px 30px;
 
 }
 
@@ -357,7 +363,7 @@ button {
 
 
 /************************************************************
- * DIVISIONS
+ * DIVISION STACK
  ************************************************************/
 
 .stack {
@@ -369,7 +375,7 @@ button {
     column;
 
   gap:
-    8px;
+    7px;
 
 }
 
@@ -391,10 +397,14 @@ button {
 }
 
 
+/************************************************************
+ * FULL COLOUR DIVISION HEADERS
+ ************************************************************/
+
 .division-header {
 
   min-height:
-    31px;
+    34px;
 
   display:
     flex;
@@ -406,7 +416,7 @@ button {
     space-between;
 
   padding:
-    5px 9px;
+    5px 10px;
 
   background:
     var(--division-colour);
@@ -426,17 +436,17 @@ button {
     center;
 
   gap:
-    7px;
+    8px;
 
   font-size:
-    12px;
+    13px;
 
   font-weight:
-    900;
+    950;
 
   text-shadow:
     0 1px 2px
-    rgba(0,0,0,.45);
+    rgba(0,0,0,.55);
 
 }
 
@@ -444,20 +454,23 @@ button {
 .count {
 
   padding:
-    2px 6px;
+    2px 7px;
 
   border:
     1px solid
-    rgba(255,255,255,.35);
+    rgba(255,255,255,.4);
 
   border-radius:
     999px;
 
   background:
-    rgba(0,0,0,.18);
+    rgba(0,0,0,.22);
 
   font-size:
     9px;
+
+  font-weight:
+    900;
 
 }
 
@@ -472,6 +485,10 @@ button {
 
 }
 
+
+/************************************************************
+ * DIVISION COLOURS
+ ************************************************************/
 
 .division[data-division="DIVISION 1"] {
   --division-colour: var(--d1);
@@ -502,7 +519,7 @@ button {
 }
 
 .division[data-division="NOT RETURNING"] {
-  --division-colour: var(--notreturning);
+  --division-colour: var(--notplaying);
 }
 
 
@@ -597,24 +614,24 @@ tbody tr.dragging {
 
 
 tbody.drag-over {
-  background: rgba(255,221,0,.04);
+  background: rgba(255,221,0,.05);
 }
 
 
 /************************************************************
- * WIDTHS
+ * COLUMN WIDTHS
  ************************************************************/
 
 .col-drag {
-  width: 1.7%;
+  width: 1.5%;
 }
 
 .col-id {
-  width: 3.6%;
+  width: 3.5%;
 }
 
 .col-team {
-  width: 19%;
+  width: 21%;
 }
 
 .col-manager {
@@ -626,7 +643,7 @@ tbody.drag-over {
 }
 
 .col-prevpos {
-  width: 5.5%;
+  width: 6%;
 }
 
 .col-overall {
@@ -638,15 +655,15 @@ tbody.drag-over {
 }
 
 .col-comments {
-  width: 20%;
+  width: 18%;
 }
 
 .col-contact {
-  width: 13%;
+  width: 12%;
 }
 
 .col-move {
-  width: 11.7%;
+  width: 11.5%;
 }
 
 
@@ -680,10 +697,10 @@ tbody.drag-over {
     #ffffff;
 
   font-size:
-    12px;
+    13px;
 
   font-weight:
-    900;
+    950;
 
   line-height:
     1;
@@ -944,7 +961,7 @@ textarea.field {
 
 
 /************************************************************
- * ERRORS / TOAST
+ * ERROR / TOAST
  ************************************************************/
 
 .error {
@@ -1096,7 +1113,9 @@ textarea.field {
 }
 
 </style>
+
 </head>
+
 
 <body>
 
@@ -1354,6 +1373,17 @@ const API_URL =
   'https://script.google.com/macros/s/AKfycbweLNRiMQMu1nMlvKMTsJmur_NrMU688qqWaxzxR2qMMWUVS6FXcuaZvDpfZJoeXdrB/exec';
 
 
+/************************************************************
+ * DIVISIONS
+ *
+ * IMPORTANT:
+ *
+ * "Not Playing" is only the DISPLAY LABEL.
+ *
+ * Its stored/internal value is:
+ * NOT RETURNING
+ ************************************************************/
+
 const DIVISIONS = [
 
   {
@@ -1400,7 +1430,7 @@ const DIVISIONS = [
 
   {
     key: 'NOT RETURNING',
-    label: 'Not Returning',
+    label: 'Not Playing',
     capacity: null
   }
 
@@ -1495,6 +1525,90 @@ const toast =
 
 
 /************************************************************
+ * NORMALISE DIVISION CLIENT SIDE
+ ************************************************************/
+
+function normaliseDivision(
+  value
+) {
+
+  const text =
+    String(
+      value || ''
+    )
+      .trim()
+      .toUpperCase()
+      .replace(
+        /\s+/g,
+        ' '
+      );
+
+
+  const map = {
+
+    'DIV 1':
+      'DIVISION 1',
+
+    'DIVISION 1':
+      'DIVISION 1',
+
+    'DIV 2A':
+      'DIVISION 2A',
+
+    'DIVISION 2A':
+      'DIVISION 2A',
+
+    'DIV 2B':
+      'DIVISION 2B',
+
+    'DIVISION 2B':
+      'DIVISION 2B',
+
+    'DIV 3A':
+      'DIVISION 3A',
+
+    'DIVISION 3A':
+      'DIVISION 3A',
+
+    'DIV 3B':
+      'DIVISION 3B',
+
+    'DIVISION 3B':
+      'DIVISION 3B',
+
+    'WAITLIST':
+      'WAITLIST',
+
+    'INFILL':
+      'INFILL',
+
+    'POTENTIAL INFILL OPTION':
+      'INFILL',
+
+    'NOT RETURNING':
+      'NOT RETURNING',
+
+    'NOT PLAYING':
+      'NOT RETURNING',
+
+    'NOT RETURNING / WITHDRAWN':
+      'NOT RETURNING',
+
+    'WITHDRAWN':
+      'NOT RETURNING'
+
+  };
+
+
+  return (
+    map[text] ||
+    text
+  );
+
+}
+
+
+/************************************************************
  * LOAD
  ************************************************************/
 
@@ -1572,7 +1686,7 @@ async function loadTeams() {
 
 
 /************************************************************
- * NORMALISE
+ * NORMALISE TEAMS
  ************************************************************/
 
 function normaliseTeams(list) {
@@ -1596,9 +1710,9 @@ function normaliseTeams(list) {
         ).trim(),
 
       division:
-        String(
-          team.division || ''
-        ).trim(),
+        normaliseDivision(
+          team.division
+        ),
 
       order:
         Number(
@@ -1856,7 +1970,7 @@ function buildRows(list) {
           colspan="11"
           style="
             text-align:center;
-            padding:10px;
+            padding:9px;
             color:#666;
           "
         >
@@ -2011,12 +2125,18 @@ function buildRows(list) {
 
 
 /************************************************************
- * OPTIONS
+ * DIVISION OPTIONS
  ************************************************************/
 
 function buildDivisionOptions(
   current
 ) {
+
+  current =
+    normaliseDivision(
+      current
+    );
+
 
   return DIVISIONS
     .map(div => `
@@ -2188,6 +2308,12 @@ function moveTeam(
   division,
   beforeId = null
 ) {
+
+  division =
+    normaliseDivision(
+      division
+    );
+
 
   const team =
     teams.find(
@@ -2501,10 +2627,22 @@ async function addTeam() {
       .trim();
 
 
-  if (!teamName) {
+  const manager =
+    document
+      .getElementById(
+        'newManager'
+      )
+      .value
+      .trim();
+
+
+  if (
+    !teamName &&
+    !manager
+  ) {
 
     alert(
-      'Enter a team name.'
+      'Enter either a team name or manager.'
     );
 
     return;
@@ -2522,13 +2660,7 @@ async function addTeam() {
       team:
         teamName,
 
-      manager:
-        document
-          .getElementById(
-            'newManager'
-          )
-          .value
-          .trim(),
+      manager,
 
       division:
         document
@@ -2600,7 +2732,7 @@ async function addTeam() {
 
 
     await sleep(
-      900
+      1000
     );
 
 
@@ -2674,7 +2806,9 @@ async function saveChanges() {
             team.id,
 
           division:
-            team.division,
+            normaliseDivision(
+              team.division
+            ),
 
           order:
             team.order,
@@ -2718,7 +2852,7 @@ async function saveChanges() {
 
 
     await sleep(
-      900
+      1000
     );
 
 
@@ -2807,7 +2941,9 @@ function comparable(list) {
         team.id,
 
       division:
-        team.division,
+        normaliseDivision(
+          team.division
+        ),
 
       order:
         Number(
@@ -2944,10 +3080,17 @@ function getDivisionTeams(
   division
 ) {
 
+  division =
+    normaliseDivision(
+      division
+    );
+
+
   return teams
     .filter(team =>
-      team.division ===
-      division
+      normaliseDivision(
+        team.division
+      ) === division
     )
     .sort(
       sortTeams
@@ -2959,6 +3102,12 @@ function getDivisionTeams(
 function reindexDivision(
   division
 ) {
+
+  division =
+    normaliseDivision(
+      division
+    );
+
 
   getDivisionTeams(
     division
@@ -2980,20 +3129,46 @@ function sortTeams(
   b
 ) {
 
-  const da =
-    DIVISIONS.findIndex(
-      division =>
-        division.key ===
-        a.division
+  const aDivision =
+    normaliseDivision(
+      a.division
     );
 
 
-  const db =
+  const bDivision =
+    normaliseDivision(
+      b.division
+    );
+
+
+  let da =
     DIVISIONS.findIndex(
       division =>
         division.key ===
-        b.division
+        aDivision
     );
+
+
+  let db =
+    DIVISIONS.findIndex(
+      division =>
+        division.key ===
+        bDivision
+    );
+
+
+  if (
+    da === -1
+  ) {
+    da = 999;
+  }
+
+
+  if (
+    db === -1
+  ) {
+    db = 999;
+  }
 
 
   if (
@@ -3268,4 +3443,5 @@ loadTeams();
 </script>
 
 </body>
+
 </html>
