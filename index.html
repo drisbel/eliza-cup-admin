@@ -12,44 +12,67 @@
 
 <title>Eliza Cup Admin</title>
 
+
 <style>
 
 :root {
 
-  --black: #000000;
-  --panel: #0a0a0a;
-  --panel2: #111111;
+  --black:
+    #000000;
 
-  --line: #242424;
+  --panel:
+    #0a0a0a;
 
-  --text: #eeeeee;
-  --muted: #888888;
+  --line:
+    #242424;
 
-  --yellow: #ffdd00;
+  --text:
+    #eeeeee;
 
-  --d1: #28427c;
-  --d2a: #bc3532;
-  --d2b: #990000;
-  --d3a: #6aa84f;
-  --d3b: #274e13;
+  --muted:
+    #888888;
 
-  --waitlist: #555555;
-  --infill: #806f00;
+  --yellow:
+    #ffdd00;
 
-  --notplaying: #4a1111;
+  --d1:
+    #28427c;
+
+  --d2a:
+    #bc3532;
+
+  --d2b:
+    #990000;
+
+  --d3a:
+    #6aa84f;
+
+  --d3b:
+    #274e13;
+
+  --waitlist:
+    #4b4b4b;
+
+  --infill:
+    #806f00;
+
+  --notplaying:
+    #3b3b3b;
 
 }
 
 
 * {
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 }
 
 
 html,
 body {
 
-  margin: 0;
+  margin:
+    0;
 
   background:
     var(--black);
@@ -87,14 +110,22 @@ button {
 
 .topbar {
 
-  position: sticky;
+  position:
+    sticky;
 
-  top: 0;
+  top:
+    0;
 
-  z-index: 100;
+  z-index:
+    100;
 
   background:
-    rgba(0,0,0,.97);
+    rgba(
+      0,
+      0,
+      0,
+      .97
+    );
 
   border-bottom:
     2px solid
@@ -112,7 +143,7 @@ button {
     auto;
 
   padding:
-    8px 12px;
+    9px 12px;
 
   display:
     flex;
@@ -140,16 +171,13 @@ button {
   font-weight:
     950;
 
-  letter-spacing:
-    -.4px;
-
 }
 
 
 .brand-subtitle {
 
   margin-top:
-    1px;
+    2px;
 
   color:
     #777;
@@ -165,14 +193,14 @@ button {
   display:
     flex;
 
-  gap:
-    5px;
-
   align-items:
     center;
 
   flex-wrap:
     wrap;
+
+  gap:
+    6px;
 
 }
 
@@ -180,10 +208,11 @@ button {
 .btn {
 
   padding:
-    6px 9px;
+    7px 10px;
 
   border:
-    1px solid #333;
+    1px solid
+    #333;
 
   border-radius:
     6px;
@@ -213,10 +242,10 @@ button {
 
 .btn-primary {
 
-  background:
+  border-color:
     var(--yellow);
 
-  border-color:
+  background:
     var(--yellow);
 
   color:
@@ -245,19 +274,20 @@ button {
     none;
 
   padding:
-    5px 7px;
+    5px 8px;
 
   border:
-    1px solid #6c5f00;
+    1px solid
+    #6c5f00;
 
   border-radius:
     999px;
 
-  color:
-    var(--yellow);
-
   background:
     #211d00;
+
+  color:
+    var(--yellow);
 
   font-size:
     9px;
@@ -286,7 +316,7 @@ button {
     auto;
 
   padding:
-    9px 10px 30px;
+    10px 10px 30px;
 
 }
 
@@ -314,13 +344,14 @@ button {
     1;
 
   min-width:
-    160px;
+    180px;
 
   padding:
-    7px 9px;
+    8px 9px;
 
   border:
-    1px solid #333;
+    1px solid
+    #333;
 
   border-radius:
     6px;
@@ -363,7 +394,46 @@ button {
 
 
 /************************************************************
- * DIVISION STACK
+ * ERRORS
+ ************************************************************/
+
+.error {
+
+  display:
+    none;
+
+  margin-bottom:
+    8px;
+
+  padding:
+    10px;
+
+  border:
+    1px solid
+    #650000;
+
+  border-radius:
+    6px;
+
+  background:
+    #260000;
+
+  color:
+    #ffaaaa;
+
+  font-size:
+    10px;
+
+}
+
+
+.error.show {
+  display: block;
+}
+
+
+/************************************************************
+ * DIVISIONS
  ************************************************************/
 
 .stack {
@@ -375,7 +445,7 @@ button {
     column;
 
   gap:
-    7px;
+    8px;
 
 }
 
@@ -386,7 +456,8 @@ button {
     hidden;
 
   border:
-    1px solid #202020;
+    1px solid
+    #202020;
 
   border-radius:
     7px;
@@ -397,14 +468,10 @@ button {
 }
 
 
-/************************************************************
- * FULL COLOUR DIVISION HEADERS
- ************************************************************/
-
 .division-header {
 
   min-height:
-    34px;
+    35px;
 
   display:
     flex;
@@ -416,7 +483,7 @@ button {
     space-between;
 
   padding:
-    5px 10px;
+    6px 10px;
 
   background:
     var(--division-colour);
@@ -444,10 +511,6 @@ button {
   font-weight:
     950;
 
-  text-shadow:
-    0 1px 2px
-    rgba(0,0,0,.55);
-
 }
 
 
@@ -458,13 +521,23 @@ button {
 
   border:
     1px solid
-    rgba(255,255,255,.4);
+    rgba(
+      255,
+      255,
+      255,
+      .4
+    );
 
   border-radius:
     999px;
 
   background:
-    rgba(0,0,0,.22);
+    rgba(
+      0,
+      0,
+      0,
+      .22
+    );
 
   font-size:
     9px;
@@ -490,36 +563,83 @@ button {
  * DIVISION COLOURS
  ************************************************************/
 
-.division[data-division="DIVISION 1"] {
-  --division-colour: var(--d1);
+.division[
+  data-division="DIVISION 1"
+] {
+
+  --division-colour:
+    var(--d1);
+
 }
 
-.division[data-division="DIVISION 2A"] {
-  --division-colour: var(--d2a);
+
+.division[
+  data-division="DIVISION 2A"
+] {
+
+  --division-colour:
+    var(--d2a);
+
 }
 
-.division[data-division="DIVISION 2B"] {
-  --division-colour: var(--d2b);
+
+.division[
+  data-division="DIVISION 2B"
+] {
+
+  --division-colour:
+    var(--d2b);
+
 }
 
-.division[data-division="DIVISION 3A"] {
-  --division-colour: var(--d3a);
+
+.division[
+  data-division="DIVISION 3A"
+] {
+
+  --division-colour:
+    var(--d3a);
+
 }
 
-.division[data-division="DIVISION 3B"] {
-  --division-colour: var(--d3b);
+
+.division[
+  data-division="DIVISION 3B"
+] {
+
+  --division-colour:
+    var(--d3b);
+
 }
 
-.division[data-division="WAITLIST"] {
-  --division-colour: var(--waitlist);
+
+.division[
+  data-division="WAITLIST"
+] {
+
+  --division-colour:
+    var(--waitlist);
+
 }
 
-.division[data-division="INFILL"] {
-  --division-colour: var(--infill);
+
+.division[
+  data-division="INFILL"
+] {
+
+  --division-colour:
+    var(--infill);
+
 }
 
-.division[data-division="NOT RETURNING"] {
-  --division-colour: var(--notplaying);
+
+.division[
+  data-division="NOT RETURNING"
+] {
+
+  --division-colour:
+    var(--notplaying);
+
 }
 
 
@@ -549,10 +669,11 @@ table {
 th {
 
   padding:
-    4px 3px;
+    5px 3px;
 
   border-bottom:
-    1px solid #252525;
+    1px solid
+    #252525;
 
   background:
     #050505;
@@ -572,22 +693,20 @@ th {
   font-weight:
     900;
 
-  line-height:
-    1;
-
 }
 
 
 td {
 
   height:
-    31px;
+    32px;
 
   padding:
     3px;
 
   border-bottom:
-    1px solid #171717;
+    1px solid
+    #171717;
 
   vertical-align:
     middle;
@@ -614,56 +733,81 @@ tbody tr.dragging {
 
 
 tbody.drag-over {
-  background: rgba(255,221,0,.05);
+
+  outline:
+    2px dashed
+    var(--yellow);
+
+  outline-offset:
+    -2px;
+
+  background:
+    rgba(
+      255,
+      221,
+      0,
+      .05
+    );
+
 }
 
 
 /************************************************************
- * COLUMN WIDTHS
+ * COLUMNS
  ************************************************************/
 
 .col-drag {
-  width: 1.5%;
+  width: 1.7%;
 }
+
 
 .col-id {
-  width: 3.5%;
+  width: 3.6%;
 }
 
+
 .col-team {
-  width: 21%;
+  width: 19%;
 }
+
 
 .col-manager {
   width: 8%;
 }
 
+
 .col-prevdiv {
   width: 6%;
 }
 
+
 .col-prevpos {
-  width: 6%;
+  width: 5.5%;
 }
+
 
 .col-overall {
   width: 4.5%;
 }
 
+
 .col-intention {
   width: 7%;
 }
 
+
 .col-comments {
-  width: 18%;
+  width: 20%;
 }
+
 
 .col-contact {
-  width: 12%;
+  width: 13%;
 }
 
+
 .col-move {
-  width: 11.5%;
+  width: 11.7%;
 }
 
 
@@ -680,10 +824,13 @@ tbody.drag-over {
     #666;
 
   font-size:
-    12px;
+    13px;
 
   text-align:
     center;
+
+  user-select:
+    none;
 
 }
 
@@ -694,16 +841,13 @@ tbody.drag-over {
     hidden;
 
   color:
-    #ffffff;
+    #fff;
 
   font-size:
-    13px;
+    12px;
 
   font-weight:
-    950;
-
-  line-height:
-    1;
+    900;
 
   white-space:
     nowrap;
@@ -740,14 +884,15 @@ tbody.drag-over {
   width:
     100%;
 
-  height:
-    24px;
+  min-height:
+    25px;
 
   padding:
-    2px 4px;
+    3px 5px;
 
   border:
-    1px solid #282828;
+    1px solid
+    #282828;
 
   border-radius:
     4px;
@@ -777,14 +922,14 @@ tbody.drag-over {
 
 textarea.field {
 
-  resize:
-    none;
+  height:
+    25px;
 
-  overflow:
-    hidden;
+  resize:
+    vertical;
 
   line-height:
-    17px;
+    16px;
 
 }
 
@@ -793,12 +938,32 @@ textarea.field {
   color: #98e69e;
 }
 
+
 .likely {
   color: #ffe873;
 }
 
+
 .unlikely {
   color: #ff9393;
+}
+
+
+/************************************************************
+ * LOADING
+ ************************************************************/
+
+.loading {
+
+  padding:
+    45px;
+
+  color:
+    #777;
+
+  text-align:
+    center;
+
 }
 
 
@@ -830,7 +995,12 @@ textarea.field {
     15px;
 
   background:
-    rgba(0,0,0,.82);
+    rgba(
+      0,
+      0,
+      0,
+      .82
+    );
 
 }
 
@@ -843,13 +1013,17 @@ textarea.field {
 .modal {
 
   width:
-    min(500px,100%);
+    min(
+      500px,
+      100%
+    );
 
   padding:
     17px;
 
   border:
-    1px solid #333;
+    1px solid
+    #333;
 
   border-top:
     4px solid
@@ -912,10 +1086,11 @@ textarea.field {
     100%;
 
   padding:
-    7px;
+    8px;
 
   border:
-    1px solid #333;
+    1px solid
+    #333;
 
   border-radius:
     5px;
@@ -961,56 +1136,8 @@ textarea.field {
 
 
 /************************************************************
- * ERROR / TOAST
+ * TOAST
  ************************************************************/
-
-.error {
-
-  display:
-    none;
-
-  margin-bottom:
-    8px;
-
-  padding:
-    9px;
-
-  border:
-    1px solid #650000;
-
-  border-radius:
-    6px;
-
-  background:
-    #260000;
-
-  color:
-    #ffaaaa;
-
-  font-size:
-    10px;
-
-}
-
-
-.error.show {
-  display: block;
-}
-
-
-.loading {
-
-  padding:
-    45px;
-
-  color:
-    #777;
-
-  text-align:
-    center;
-
-}
-
 
 .toast {
 
@@ -1027,10 +1154,11 @@ textarea.field {
     800;
 
   padding:
-    8px 11px;
+    9px 12px;
 
   border:
-    1px solid #444;
+    1px solid
+    #444;
 
   border-left:
     4px solid
@@ -1055,7 +1183,9 @@ textarea.field {
     0;
 
   transform:
-    translateY(10px);
+    translateY(
+      10px
+    );
 
   transition:
     .18s;
@@ -1072,7 +1202,9 @@ textarea.field {
     1;
 
   transform:
-    translateY(0);
+    translateY(
+      0
+    );
 
 }
 
@@ -1081,11 +1213,14 @@ textarea.field {
  * RESPONSIVE
  ************************************************************/
 
-@media (max-width: 1050px) {
+@media (
+  max-width: 1050px
+) {
 
   .table-wrap {
     overflow-x: auto;
   }
+
 
   table {
     min-width: 1150px;
@@ -1094,7 +1229,9 @@ textarea.field {
 }
 
 
-@media (max-width: 700px) {
+@media (
+  max-width: 700px
+) {
 
   .topbar-inner {
 
@@ -1106,8 +1243,20 @@ textarea.field {
 
   }
 
+
   .page {
     padding: 7px;
+  }
+
+
+  .toolbar {
+
+    align-items:
+      stretch;
+
+    flex-direction:
+      column;
+
   }
 
 }
@@ -1143,7 +1292,7 @@ textarea.field {
         id="unsaved"
         class="unsaved"
       >
-        UNSAVED
+        UNSAVED CHANGES
       </span>
 
 
@@ -1186,7 +1335,7 @@ textarea.field {
         class="btn btn-primary"
         disabled
       >
-        Save
+        Save Changes
       </button>
 
     </div>
@@ -1227,7 +1376,7 @@ textarea.field {
   <div id="content">
 
     <div class="loading">
-      Loading Eliza Cup teams...
+      Loading teams...
     </div>
 
   </div>
@@ -1243,7 +1392,10 @@ textarea.field {
 
   <div class="modal">
 
-    <h2>Add Team</h2>
+
+    <h2>
+      Add Team
+    </h2>
 
 
     <div class="form-row">
@@ -1300,9 +1452,18 @@ textarea.field {
       >
 
         <option value=""></option>
-        <option>CONFIRMED</option>
-        <option>LIKELY</option>
-        <option>UNLIKELY</option>
+
+        <option value="CONFIRMED">
+          CONFIRMED
+        </option>
+
+        <option value="LIKELY">
+          LIKELY
+        </option>
+
+        <option value="UNLIKELY">
+          UNLIKELY
+        </option>
 
       </select>
 
@@ -1356,6 +1517,7 @@ textarea.field {
 
     </div>
 
+
   </div>
 
 </div>
@@ -1369,6 +1531,10 @@ textarea.field {
 
 <script>
 
+/************************************************************
+ * APPS SCRIPT WEB APP
+ ************************************************************/
+
 const API_URL =
   'https://script.google.com/macros/s/AKfycbweLNRiMQMu1nMlvKMTsJmur_NrMU688qqWaxzxR2qMMWUVS6FXcuaZvDpfZJoeXdrB/exec';
 
@@ -1376,147 +1542,256 @@ const API_URL =
 /************************************************************
  * DIVISIONS
  *
- * IMPORTANT:
+ * This is the ONLY division definition used by:
  *
- * "Not Playing" is only the DISPLAY LABEL.
+ * - render
+ * - move dropdown
+ * - drag/drop
+ * - add team
  *
- * Its stored/internal value is:
+ * Therefore they cannot drift apart.
+ *
+ * DISPLAY:
+ * Not Playing
+ *
+ * DATABASE:
  * NOT RETURNING
  ************************************************************/
 
 const DIVISIONS = [
 
   {
-    key: 'DIVISION 1',
-    label: 'Division 1',
-    capacity: 14
+
+    key:
+      'DIVISION 1',
+
+    label:
+      'Division 1',
+
+    capacity:
+      14
+
   },
 
-  {
-    key: 'DIVISION 2A',
-    label: 'Division 2A',
-    capacity: 12
-  },
 
   {
-    key: 'DIVISION 2B',
-    label: 'Division 2B',
-    capacity: 12
+
+    key:
+      'DIVISION 2A',
+
+    label:
+      'Division 2A',
+
+    capacity:
+      12
+
   },
 
-  {
-    key: 'DIVISION 3A',
-    label: 'Division 3A',
-    capacity: 12
-  },
 
   {
-    key: 'DIVISION 3B',
-    label: 'Division 3B',
-    capacity: 12
+
+    key:
+      'DIVISION 2B',
+
+    label:
+      'Division 2B',
+
+    capacity:
+      12
+
   },
 
-  {
-    key: 'WAITLIST',
-    label: 'Waitlist',
-    capacity: null
-  },
 
   {
-    key: 'INFILL',
-    label: 'Infill',
-    capacity: null
+
+    key:
+      'DIVISION 3A',
+
+    label:
+      'Division 3A',
+
+    capacity:
+      12
+
   },
 
+
   {
-    key: 'NOT RETURNING',
-    label: 'Not Playing',
-    capacity: null
+
+    key:
+      'DIVISION 3B',
+
+    label:
+      'Division 3B',
+
+    capacity:
+      12
+
+  },
+
+
+  {
+
+    key:
+      'WAITLIST',
+
+    label:
+      'Waitlist',
+
+    capacity:
+      null
+
+  },
+
+
+  {
+
+    key:
+      'INFILL',
+
+    label:
+      'Infill',
+
+    capacity:
+      null
+
+  },
+
+
+  {
+
+    key:
+      'NOT RETURNING',
+
+    label:
+      'Not Playing',
+
+    capacity:
+      null
+
   }
 
 ];
 
 
 const INTENTIONS = [
+
   '',
+
   'CONFIRMED',
+
   'LIKELY',
+
   'UNLIKELY'
+
 ];
 
 
-let teams = [];
-let originalTeams = [];
-let undoStack = [];
+/************************************************************
+ * STATE
+ ************************************************************/
 
-let draggedId = null;
-let saving = false;
+let teams =
+  [];
 
+
+let originalTeams =
+  [];
+
+
+let undoStack =
+  [];
+
+
+let draggedId =
+  null;
+
+
+let saving =
+  false;
+
+
+/************************************************************
+ * ELEMENTS
+ ************************************************************/
 
 const content =
   document.getElementById(
     'content'
   );
 
+
 const search =
   document.getElementById(
     'search'
   );
+
 
 const status =
   document.getElementById(
     'status'
   );
 
+
 const error =
   document.getElementById(
     'error'
   );
+
 
 const unsaved =
   document.getElementById(
     'unsaved'
   );
 
+
 const saveBtn =
   document.getElementById(
     'saveBtn'
   );
+
 
 const undoBtn =
   document.getElementById(
     'undoBtn'
   );
 
+
 const discardBtn =
   document.getElementById(
     'discardBtn'
   );
+
 
 const refreshBtn =
   document.getElementById(
     'refreshBtn'
   );
 
+
 const addTeamBtn =
   document.getElementById(
     'addTeamBtn'
   );
+
 
 const addModal =
   document.getElementById(
     'addModal'
   );
 
+
 const cancelAdd =
   document.getElementById(
     'cancelAdd'
   );
 
+
 const confirmAdd =
   document.getElementById(
     'confirmAdd'
   );
+
 
 const toast =
   document.getElementById(
@@ -1525,7 +1800,50 @@ const toast =
 
 
 /************************************************************
- * NORMALISE DIVISION CLIENT SIDE
+ * NORMALISE ELIZA ID
+ ************************************************************/
+
+function normaliseId(
+  value
+) {
+
+  const text =
+    String(
+      value || ''
+    ).trim();
+
+
+  if (!text) {
+    return '';
+  }
+
+
+  if (
+    /^\d+$/.test(
+      text
+    )
+  ) {
+
+    return String(
+      parseInt(
+        text,
+        10
+      )
+    ).padStart(
+      3,
+      '0'
+    );
+
+  }
+
+
+  return text;
+
+}
+
+
+/************************************************************
+ * NORMALISE DIVISION
  ************************************************************/
 
 function normaliseDivision(
@@ -1546,53 +1864,102 @@ function normaliseDivision(
 
   const map = {
 
+
     'DIV 1':
       'DIVISION 1',
+
+
+    'D1':
+      'DIVISION 1',
+
 
     'DIVISION 1':
       'DIVISION 1',
 
+
     'DIV 2A':
       'DIVISION 2A',
+
+
+    '2A':
+      'DIVISION 2A',
+
 
     'DIVISION 2A':
       'DIVISION 2A',
 
+
     'DIV 2B':
       'DIVISION 2B',
+
+
+    '2B':
+      'DIVISION 2B',
+
 
     'DIVISION 2B':
       'DIVISION 2B',
 
+
     'DIV 3A':
       'DIVISION 3A',
+
+
+    '3A':
+      'DIVISION 3A',
+
 
     'DIVISION 3A':
       'DIVISION 3A',
 
+
     'DIV 3B':
       'DIVISION 3B',
+
+
+    '3B':
+      'DIVISION 3B',
+
 
     'DIVISION 3B':
       'DIVISION 3B',
 
+
     'WAITLIST':
       'WAITLIST',
+
+
+    'WAIT LIST':
+      'WAITLIST',
+
 
     'INFILL':
       'INFILL',
 
+
     'POTENTIAL INFILL OPTION':
       'INFILL',
+
+
+    /*
+     * NOT PLAYING aliases.
+     */
 
     'NOT RETURNING':
       'NOT RETURNING',
 
+
     'NOT PLAYING':
       'NOT RETURNING',
 
+
     'NOT RETURNING / WITHDRAWN':
       'NOT RETURNING',
+
+
+    'NOT RETURNING/WITHDRAWN':
+      'NOT RETURNING',
+
 
     'WITHDRAWN':
       'NOT RETURNING'
@@ -1614,7 +1981,10 @@ function normaliseDivision(
 
 async function loadTeams() {
 
-  setError('');
+  setError(
+    ''
+  );
+
 
   status.textContent =
     'Loading...';
@@ -1622,19 +1992,36 @@ async function loadTeams() {
 
   try {
 
+
     const response =
       await fetch(
+
         API_URL +
         '?action=getTeams&_=' +
         Date.now()
+
       );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error(
+        'HTTP ' +
+        response.status
+      );
+
+    }
 
 
     const data =
       await response.json();
 
 
-    if (!data.success) {
+    if (
+      !data.success
+    ) {
 
       throw new Error(
         data.error ||
@@ -1650,25 +2037,38 @@ async function loadTeams() {
       );
 
 
+    /*
+     * Duplicate-ID protection.
+     */
+
+    validateTeamState(
+      teams
+    );
+
+
     originalTeams =
       clone(
         teams
       );
 
 
-    undoStack = [];
+    undoStack =
+      [];
 
 
     render();
+
 
     updateControls();
 
 
     status.textContent =
-      `${teams.length} teams`;
+      teams.length +
+      ' teams';
 
 
   } catch (err) {
+
 
     console.error(
       err
@@ -1680,79 +2080,175 @@ async function loadTeams() {
       err.message
     );
 
+
+    status.textContent =
+      'Load failed';
+
   }
 
 }
 
 
 /************************************************************
- * NORMALISE TEAMS
+ * NORMALISE TEAM OBJECTS
  ************************************************************/
 
-function normaliseTeams(list) {
+function normaliseTeams(
+  list
+) {
 
-  return (list || [])
-    .map(team => ({
+  return (
+    list || []
+  )
+    .map(
+      team => ({
 
-      id:
-        String(
-          team.id || ''
-        ).trim(),
+        id:
+          normaliseId(
+            team.id
+          ),
 
-      team:
-        String(
-          team.team || ''
-        ).trim(),
 
-      manager:
-        String(
-          team.manager || ''
-        ).trim(),
+        team:
+          String(
+            team.team || ''
+          ).trim(),
 
-      division:
-        normaliseDivision(
-          team.division
-        ),
 
-      order:
-        Number(
-          team.order
-        ) || 999,
+        manager:
+          String(
+            team.manager || ''
+          ).trim(),
 
-      intention:
-        String(
-          team.intention || ''
-        ).trim(),
 
-      previousDivision:
-        String(
-          team.previousDivision || ''
-        ).trim(),
+        division:
+          normaliseDivision(
+            team.division
+          ),
 
-      previousPosition:
-        String(
-          team.previousPosition || ''
-        ).trim(),
 
-      overall:
-        String(
-          team.overall || ''
-        ).trim(),
+        order:
+          Number(
+            team.order
+          ) || 999,
 
-      comments:
-        String(
-          team.comments || ''
-        ).trim(),
 
-      contact:
-        String(
-          team.contact || ''
-        ).trim()
+        intention:
+          String(
+            team.intention || ''
+          )
+            .trim()
+            .toUpperCase(),
 
-    }))
+
+        previousDivision:
+          String(
+            team.previousDivision ||
+            ''
+          ).trim(),
+
+
+        previousPosition:
+          String(
+            team.previousPosition ||
+            ''
+          ).trim(),
+
+
+        overall:
+          String(
+            team.overall ||
+            ''
+          ).trim(),
+
+
+        comments:
+          String(
+            team.comments ||
+            ''
+          ).trim(),
+
+
+        contact:
+          String(
+            team.contact ||
+            ''
+          ).trim()
+
+      })
+    )
     .sort(
       sortTeams
     );
+
+}
+
+
+/************************************************************
+ * VALIDATE BROWSER STATE
+ ************************************************************/
+
+function validateTeamState(
+  list
+) {
+
+  const seen =
+    new Set();
+
+
+  list.forEach(
+    team => {
+
+
+      if (!team.id) {
+
+        throw new Error(
+          'A team has no ELIZA ID.'
+        );
+
+      }
+
+
+      if (
+        seen.has(
+          team.id
+        )
+      ) {
+
+        throw new Error(
+          'Duplicate ELIZA ID: ' +
+          team.id
+        );
+
+      }
+
+
+      seen.add(
+        team.id
+      );
+
+
+      if (
+        !DIVISIONS.some(
+          division =>
+            division.key ===
+            normaliseDivision(
+              team.division
+            )
+        )
+      ) {
+
+        throw new Error(
+          'Unknown division for ' +
+          team.id +
+          ': ' +
+          team.division
+        );
+
+      }
+
+    }
+  );
 
 }
 
@@ -1774,168 +2270,211 @@ function render() {
       'div'
     );
 
+
   wrapper.className =
     'stack';
 
 
-  DIVISIONS.forEach(div => {
-
-    const fullList =
-      getDivisionTeams(
-        div.key
-      );
+  DIVISIONS.forEach(
+    division => {
 
 
-    const visible =
-      fullList.filter(team => {
-
-        if (!query) {
-          return true;
-        }
-
-        return [
-
-          team.id,
-          team.team,
-          team.manager,
-          team.previousDivision,
-          team.previousPosition,
-          team.overall,
-          team.intention,
-          team.comments,
-          team.contact
-
-        ]
-          .join(' ')
-          .toLowerCase()
-          .includes(query);
-
-      });
+      const fullList =
+        getDivisionTeams(
+          division.key
+        );
 
 
-    const section =
-      document.createElement(
-        'section'
-      );
+      const visible =
+        fullList.filter(
+          team => {
 
 
-    section.className =
-      'division';
+            if (!query) {
+              return true;
+            }
 
 
-    section.dataset.division =
-      div.key;
+            return [
+
+              team.id,
+
+              team.team,
+
+              team.manager,
+
+              team.previousDivision,
+
+              team.previousPosition,
+
+              team.overall,
+
+              team.intention,
+
+              team.comments,
+
+              team.contact
+
+            ]
+              .join(
+                ' '
+              )
+              .toLowerCase()
+              .includes(
+                query
+              );
+
+          }
+        );
 
 
-    const count =
-      div.capacity === null
-
-        ? fullList.length
-
-        : `${fullList.length} / ${div.capacity}`;
+      const section =
+        document.createElement(
+          'section'
+        );
 
 
-    const over =
-      div.capacity !== null &&
-      fullList.length >
-      div.capacity;
+      section.className =
+        'division';
 
 
-    section.innerHTML = `
+      section.dataset.division =
+        division.key;
 
-      <div class="division-header">
 
-        <div class="division-name">
+      const countText =
+        division.capacity ===
+        null
 
-          ${escapeHtml(div.label)}
+          ? String(
+              fullList.length
+            )
 
-          <span class="
-            count
-            ${over ? 'over' : ''}
-          ">
-            ${count}
-          </span>
+          : (
+              fullList.length +
+              ' / ' +
+              division.capacity
+            );
+
+
+      const over =
+        division.capacity !==
+        null &&
+        fullList.length >
+        division.capacity;
+
+
+      section.innerHTML = `
+
+        <div class="division-header">
+
+          <div class="division-name">
+
+            ${escapeHtml(
+              division.label
+            )}
+
+            <span
+              class="
+                count
+                ${
+                  over
+                    ? 'over'
+                    : ''
+                }
+              "
+            >
+              ${countText}
+            </span>
+
+          </div>
 
         </div>
 
-      </div>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th class="col-drag">
+                </th>
+
+                <th class="col-id">
+                  ID
+                </th>
+
+                <th class="col-team">
+                  Team
+                </th>
+
+                <th class="col-manager">
+                  Manager
+                </th>
+
+                <th class="col-prevdiv">
+                  Prev Div
+                </th>
+
+                <th class="col-prevpos">
+                  Prev Pos
+                </th>
+
+                <th class="col-overall">
+                  Overall
+                </th>
+
+                <th class="col-intention">
+                  Intention
+                </th>
+
+                <th class="col-comments">
+                  Comments
+                </th>
+
+                <th class="col-contact">
+                  Contact
+                </th>
+
+                <th class="col-move">
+                  Move
+                </th>
+
+              </tr>
+
+            </thead>
 
 
-      <div class="table-wrap">
+            <tbody
+              data-division="${escapeHtml(
+                division.key
+              )}"
+            >
 
-        <table>
+              ${
+                buildRows(
+                  visible
+                )
+              }
 
-          <thead>
+            </tbody>
 
-            <tr>
+          </table>
 
-              <th class="col-drag"></th>
+        </div>
 
-              <th class="col-id">
-                ID
-              </th>
-
-              <th class="col-team">
-                Team
-              </th>
-
-              <th class="col-manager">
-                Manager
-              </th>
-
-              <th class="col-prevdiv">
-                Prev Div
-              </th>
-
-              <th class="col-prevpos">
-                Prev Pos
-              </th>
-
-              <th class="col-overall">
-                Overall
-              </th>
-
-              <th class="col-intention">
-                Intention
-              </th>
-
-              <th class="col-comments">
-                Comments
-              </th>
-
-              <th class="col-contact">
-                Contact
-              </th>
-
-              <th class="col-move">
-                Move
-              </th>
-
-            </tr>
-
-          </thead>
+      `;
 
 
-          <tbody
-            data-division="${escapeHtml(div.key)}"
-          >
+      wrapper.appendChild(
+        section
+      );
 
-            ${buildRows(visible)}
-
-          </tbody>
-
-        </table>
-
-      </div>
-
-    `;
-
-
-    wrapper.appendChild(
-      section
-    );
-
-  });
+    }
+  );
 
 
   content.innerHTML =
@@ -1948,19 +2487,25 @@ function render() {
 
 
   attachEditing();
+
   attachMoving();
+
   attachDrag();
 
 }
 
 
 /************************************************************
- * ROWS
+ * BUILD ROWS
  ************************************************************/
 
-function buildRows(list) {
+function buildRows(
+  list
+) {
 
-  if (!list.length) {
+  if (
+    !list.length
+  ) {
 
     return `
 
@@ -1985,251 +2530,369 @@ function buildRows(list) {
 
 
   return list
-    .map(team => `
+    .map(
+      team => `
 
-      <tr
-        draggable="true"
-        data-team-id="${escapeHtml(team.id)}"
-      >
+        <tr
+          draggable="true"
+          data-team-id="${escapeHtml(
+            team.id
+          )}"
+        >
 
-        <td>
-          <div class="drag-handle">
-            ⋮⋮
-          </div>
-        </td>
+          <td>
+
+            <div class="drag-handle">
+              ⋮⋮
+            </div>
+
+          </td>
 
 
-        <td class="readonly">
-          ${escapeHtml(team.id)}
-        </td>
+          <td class="readonly">
+
+            ${escapeHtml(
+              team.id
+            )}
+
+          </td>
 
 
-        <td>
+          <td>
 
-          <div
-            class="team-name"
-            title="${escapeHtml(team.team)}"
-          >
-            ${
-              escapeHtml(
+            <div
+              class="team-name"
+              title="${escapeHtml(
+                team.team
+              )}"
+            >
+
+              ${escapeHtml(
                 team.team ||
                 team.manager ||
                 'Unnamed'
-              )
-            }
-          </div>
+              )}
 
-        </td>
+            </div>
 
-
-        <td
-          class="readonly"
-          title="${escapeHtml(team.manager)}"
-        >
-          ${escapeHtml(team.manager || '—')}
-        </td>
+          </td>
 
 
-        <td class="readonly">
-          ${escapeHtml(team.previousDivision || '—')}
-        </td>
-
-
-        <td class="readonly">
-          ${escapeHtml(team.previousPosition || '—')}
-        </td>
-
-
-        <td class="readonly">
-          ${escapeHtml(team.overall || '—')}
-        </td>
-
-
-        <td>
-
-          <select
-            class="
-              field
-              intention
-              ${intentionClass(team.intention)}
-            "
-            data-id="${escapeHtml(team.id)}"
+          <td
+            class="readonly"
+            title="${escapeHtml(
+              team.manager
+            )}"
           >
 
-            ${
-              INTENTIONS
-                .map(value => `
-
-                  <option
-                    value="${escapeHtml(value)}"
-                    ${
-                      value === team.intention
-                        ? 'selected'
-                        : ''
-                    }
-                  >
-                    ${escapeHtml(value || '—')}
-                  </option>
-
-                `)
-                .join('')
-            }
-
-          </select>
-
-        </td>
-
-
-        <td>
-
-          <textarea
-            class="field comments"
-            data-id="${escapeHtml(team.id)}"
-          >${escapeHtml(team.comments)}</textarea>
-
-        </td>
-
-
-        <td>
-
-          <input
-            class="field contact"
-            data-id="${escapeHtml(team.id)}"
-            value="${escapeHtml(team.contact)}"
-          >
-
-        </td>
-
-
-        <td>
-
-          <select
-            class="field move"
-            data-id="${escapeHtml(team.id)}"
-          >
-
-            ${buildDivisionOptions(
-              team.division
+            ${escapeHtml(
+              team.manager ||
+              '—'
             )}
 
-          </select>
+          </td>
 
-        </td>
 
-      </tr>
+          <td class="readonly">
 
-    `)
-    .join('');
+            ${escapeHtml(
+              team.previousDivision ||
+              '—'
+            )}
+
+          </td>
+
+
+          <td class="readonly">
+
+            ${escapeHtml(
+              team.previousPosition ||
+              '—'
+            )}
+
+          </td>
+
+
+          <td class="readonly">
+
+            ${escapeHtml(
+              team.overall ||
+              '—'
+            )}
+
+          </td>
+
+
+          <td>
+
+            <select
+              class="
+                field
+                intention
+                ${intentionClass(
+                  team.intention
+                )}
+              "
+              data-id="${escapeHtml(
+                team.id
+              )}"
+            >
+
+              ${
+                INTENTIONS
+                  .map(
+                    value => `
+
+                      <option
+                        value="${escapeHtml(
+                          value
+                        )}"
+                        ${
+                          value ===
+                          team.intention
+
+                            ? 'selected'
+
+                            : ''
+                        }
+                      >
+
+                        ${
+                          escapeHtml(
+                            value ||
+                            '—'
+                          )
+                        }
+
+                      </option>
+
+                    `
+                  )
+                  .join(
+                    ''
+                  )
+              }
+
+            </select>
+
+          </td>
+
+
+          <td>
+
+            <textarea
+              class="
+                field
+                comments
+              "
+              data-id="${escapeHtml(
+                team.id
+              )}"
+            >${escapeHtml(
+              team.comments
+            )}</textarea>
+
+          </td>
+
+
+          <td>
+
+            <input
+              class="
+                field
+                contact
+              "
+              data-id="${escapeHtml(
+                team.id
+              )}"
+              value="${escapeHtml(
+                team.contact
+              )}"
+            >
+
+          </td>
+
+
+          <td>
+
+            <select
+              class="
+                field
+                move
+              "
+              data-id="${escapeHtml(
+                team.id
+              )}"
+            >
+
+              ${
+                buildDivisionOptions(
+                  team.division
+                )
+              }
+
+            </select>
+
+          </td>
+
+        </tr>
+
+      `
+    )
+    .join(
+      ''
+    );
 
 }
 
 
 /************************************************************
  * DIVISION OPTIONS
+ *
+ * Generated from same DIVISIONS array used by rendering.
  ************************************************************/
 
 function buildDivisionOptions(
   current
 ) {
 
-  current =
+  const currentDivision =
     normaliseDivision(
       current
     );
 
 
   return DIVISIONS
-    .map(div => `
+    .map(
+      division => `
 
-      <option
-        value="${escapeHtml(div.key)}"
-        ${
-          current === div.key
-            ? 'selected'
-            : ''
-        }
-      >
-        ${escapeHtml(div.label)}
-      </option>
+        <option
+          value="${escapeHtml(
+            division.key
+          )}"
+          ${
+            currentDivision ===
+            division.key
 
-    `)
-    .join('');
+              ? 'selected'
+
+              : ''
+          }
+        >
+
+          ${escapeHtml(
+            division.label
+          )}
+
+        </option>
+
+      `
+    )
+    .join(
+      ''
+    );
 
 }
 
 
 /************************************************************
- * EDITING
+ * EDIT FIELDS
  ************************************************************/
 
 function attachEditing() {
+
 
   document
     .querySelectorAll(
       '.intention'
     )
-    .forEach(input => {
+    .forEach(
+      input => {
 
-      input.addEventListener(
-        'change',
-        () => {
 
-          editField(
-            input.dataset.id,
-            'intention',
-            input.value
-          );
+        input.addEventListener(
+          'change',
+          () => {
 
-          render();
 
-        }
-      );
+            editField(
 
-    });
+              input.dataset.id,
+
+              'intention',
+
+              input.value
+
+            );
+
+
+            render();
+
+          }
+        );
+
+      }
+    );
 
 
   document
     .querySelectorAll(
       '.comments'
     )
-    .forEach(input => {
+    .forEach(
+      input => {
 
-      input.addEventListener(
-        'change',
-        () => {
 
-          editField(
-            input.dataset.id,
-            'comments',
-            input.value
-          );
+        input.addEventListener(
+          'change',
+          () => {
 
-        }
-      );
 
-    });
+            editField(
+
+              input.dataset.id,
+
+              'comments',
+
+              input.value
+
+            );
+
+          }
+        );
+
+      }
+    );
 
 
   document
     .querySelectorAll(
       '.contact'
     )
-    .forEach(input => {
+    .forEach(
+      input => {
 
-      input.addEventListener(
-        'change',
-        () => {
 
-          editField(
-            input.dataset.id,
-            'contact',
-            input.value
-          );
+        input.addEventListener(
+          'change',
+          () => {
 
-        }
-      );
 
-    });
+            editField(
+
+              input.dataset.id,
+
+              'contact',
+
+              input.value
+
+            );
+
+          }
+        );
+
+      }
+    );
 
 }
 
@@ -2240,10 +2903,17 @@ function editField(
   value
 ) {
 
+  id =
+    normaliseId(
+      id
+    );
+
+
   const team =
     teams.find(
-      team =>
-        team.id === id
+      item =>
+        item.id ===
+        id
     );
 
 
@@ -2260,9 +2930,7 @@ function editField(
   }
 
 
-  undoStack.push(
-    clone(teams)
-  );
+  pushUndo();
 
 
   team[field] =
@@ -2275,7 +2943,7 @@ function editField(
 
 
 /************************************************************
- * MOVE
+ * MOVE TEAM
  ************************************************************/
 
 function attachMoving() {
@@ -2284,114 +2952,196 @@ function attachMoving() {
     .querySelectorAll(
       '.move'
     )
-    .forEach(select => {
+    .forEach(
+      select => {
 
-      select.addEventListener(
-        'change',
-        () => {
 
-          moveTeam(
-            select.dataset.id,
-            select.value
-          );
+        select.addEventListener(
+          'change',
+          () => {
 
-        }
-      );
 
-    });
+            moveTeam(
+
+              select.dataset.id,
+
+              select.value
+
+            );
+
+          }
+        );
+
+      }
+    );
 
 }
 
 
+/************************************************************
+ * MOVE
+ *
+ * Team is NEVER removed from teams[].
+ * Only division/order are changed.
+ ************************************************************/
+
 function moveTeam(
   id,
-  division,
+  newDivision,
   beforeId = null
 ) {
 
-  division =
-    normaliseDivision(
-      division
+  id =
+    normaliseId(
+      id
     );
+
+
+  newDivision =
+    normaliseDivision(
+      newDivision
+    );
+
+
+  if (
+    !DIVISIONS.some(
+      division =>
+        division.key ===
+        newDivision
+    )
+  ) {
+
+    setError(
+      'Invalid destination: ' +
+      newDivision
+    );
+
+    return;
+
+  }
 
 
   const team =
     teams.find(
-      team =>
-        team.id === id
+      item =>
+        item.id ===
+        id
     );
 
 
   if (!team) {
+
+    setError(
+      'Could not find team ' +
+      id
+    );
+
     return;
+
   }
-
-
-  if (
-    team.division === division &&
-    !beforeId
-  ) {
-    return;
-  }
-
-
-  undoStack.push(
-    clone(teams)
-  );
 
 
   const oldDivision =
     team.division;
 
 
+  if (
+    oldDivision ===
+    newDivision &&
+    !beforeId
+  ) {
+
+    return;
+
+  }
+
+
+  pushUndo();
+
+
+  /*
+   * Change ONLY the destination.
+   */
+
   team.division =
-    division;
+    newDivision;
 
 
-  let targetTeams =
+  /*
+   * Rebuild target division order.
+   */
+
+  const destinationTeams =
     teams
-      .filter(item =>
-        item.division === division &&
-        item.id !== id
-      )
-      .sort(sortTeams);
-
-
-  let insertIndex =
-    targetTeams.length;
-
-
-  if (beforeId) {
-
-    const found =
-      targetTeams.findIndex(
+      .filter(
         item =>
-          item.id ===
-          beforeId
+          item.id !==
+          id &&
+          normaliseDivision(
+            item.division
+          ) ===
+          newDivision
+      )
+      .sort(
+        (a,b) =>
+          Number(
+            a.order || 999
+          ) -
+          Number(
+            b.order || 999
+          )
       );
 
 
+  let insertIndex =
+    destinationTeams.length;
+
+
+  if (
+    beforeId
+  ) {
+
+    const targetId =
+      normaliseId(
+        beforeId
+      );
+
+
+    const targetIndex =
+      destinationTeams
+        .findIndex(
+          item =>
+            item.id ===
+            targetId
+        );
+
+
     if (
-      found !== -1
+      targetIndex !==
+      -1
     ) {
 
       insertIndex =
-        found;
+        targetIndex;
 
     }
 
   }
 
 
-  targetTeams.splice(
+  destinationTeams.splice(
+
     insertIndex,
+
     0,
+
     team
+
   );
 
 
-  targetTeams.forEach(
-    (item, index) => {
+  destinationTeams.forEach(
+    (item,index) => {
 
       item.order =
         index + 1;
@@ -2405,7 +3155,13 @@ function moveTeam(
   );
 
 
+  validateTeamState(
+    teams
+  );
+
+
   render();
+
 
   updateControls();
 
@@ -2413,130 +3169,188 @@ function moveTeam(
 
 
 /************************************************************
- * DRAG
+ * DRAG DROP
  ************************************************************/
 
 function attachDrag() {
+
 
   document
     .querySelectorAll(
       'tr[data-team-id]'
     )
-    .forEach(row => {
-
-      row.addEventListener(
-        'dragstart',
-        event => {
-
-          draggedId =
-            row.dataset.teamId;
+    .forEach(
+      row => {
 
 
-          row.classList.add(
-            'dragging'
-          );
+        row.addEventListener(
+          'dragstart',
+          event => {
 
 
-          event
-            .dataTransfer
-            .setData(
-              'text/plain',
-              draggedId
+            draggedId =
+              normaliseId(
+                row.dataset.teamId
+              );
+
+
+            row.classList.add(
+              'dragging'
             );
 
-        }
-      );
+
+            event
+              .dataTransfer
+              .setData(
+                'text/plain',
+                draggedId
+              );
 
 
-      row.addEventListener(
-        'dragend',
-        () => {
+            event.dataTransfer.effectAllowed =
+              'move';
 
-          draggedId =
-            null;
+          }
+        );
 
 
-          row.classList.remove(
-            'dragging'
-          );
+        row.addEventListener(
+          'dragend',
+          () => {
 
-        }
-      );
 
-    });
+            draggedId =
+              null;
+
+
+            row.classList.remove(
+              'dragging'
+            );
+
+
+            document
+              .querySelectorAll(
+                'tbody.drag-over'
+              )
+              .forEach(
+                body =>
+                  body.classList.remove(
+                    'drag-over'
+                  )
+              );
+
+          }
+        );
+
+      }
+    );
 
 
   document
     .querySelectorAll(
       'tbody[data-division]'
     )
-    .forEach(body => {
-
-      body.addEventListener(
-        'dragover',
-        event => {
-
-          event.preventDefault();
-
-          body.classList.add(
-            'drag-over'
-          );
-
-        }
-      );
+    .forEach(
+      body => {
 
 
-      body.addEventListener(
-        'dragleave',
-        () => {
-
-          body.classList.remove(
-            'drag-over'
-          );
-
-        }
-      );
+        body.addEventListener(
+          'dragover',
+          event => {
 
 
-      body.addEventListener(
-        'drop',
-        event => {
-
-          event.preventDefault();
+            event.preventDefault();
 
 
-          body.classList.remove(
-            'drag-over'
-          );
+            event.dataTransfer.dropEffect =
+              'move';
 
 
-          const id =
-            draggedId ||
-            event
-              .dataTransfer
-              .getData(
-                'text/plain'
-              );
+            body.classList.add(
+              'drag-over'
+            );
+
+          }
+        );
 
 
-          const target =
-            event.target.closest(
-              'tr[data-team-id]'
+        body.addEventListener(
+          'dragleave',
+          event => {
+
+
+            if (
+              body.contains(
+                event.relatedTarget
+              )
+            ) {
+              return;
+            }
+
+
+            body.classList.remove(
+              'drag-over'
+            );
+
+          }
+        );
+
+
+        body.addEventListener(
+          'drop',
+          event => {
+
+
+            event.preventDefault();
+
+
+            body.classList.remove(
+              'drag-over'
             );
 
 
-          moveTeam(
-            id,
-            body.dataset.division,
-            target
-              ? target.dataset.teamId
-              : null
-          );
+            const id =
+              normaliseId(
 
-        }
-      );
+                draggedId ||
 
-    });
+                event
+                  .dataTransfer
+                  .getData(
+                    'text/plain'
+                  )
+
+              );
+
+
+            if (!id) {
+              return;
+            }
+
+
+            const target =
+              event.target.closest(
+                'tr[data-team-id]'
+              );
+
+
+            moveTeam(
+
+              id,
+
+              body.dataset.division,
+
+              target
+                ? target.dataset.teamId
+                : null
+
+            );
+
+          }
+        );
+
+      }
+    );
 
 }
 
@@ -2547,50 +3361,76 @@ function attachDrag() {
 
 function openAddModal() {
 
-  document.getElementById(
-    'newTeam'
-  ).value = '';
+
+  document
+    .getElementById(
+      'newTeam'
+    )
+    .value = '';
 
 
-  document.getElementById(
-    'newManager'
-  ).value = '';
+  document
+    .getElementById(
+      'newManager'
+    )
+    .value = '';
 
 
-  document.getElementById(
-    'newIntention'
-  ).value = '';
+  document
+    .getElementById(
+      'newIntention'
+    )
+    .value = '';
 
 
-  document.getElementById(
-    'newComments'
-  ).value = '';
+  document
+    .getElementById(
+      'newComments'
+    )
+    .value = '';
 
 
-  document.getElementById(
-    'newContact'
-  ).value = '';
+  document
+    .getElementById(
+      'newContact'
+    )
+    .value = '';
 
 
-  document.getElementById(
-    'newDivision'
-  ).innerHTML =
-    DIVISIONS
-      .map(div => `
+  document
+    .getElementById(
+      'newDivision'
+    )
+    .innerHTML =
+      DIVISIONS
+        .map(
+          division => `
 
-        <option
-          value="${escapeHtml(div.key)}"
-          ${
-            div.key === 'WAITLIST'
-              ? 'selected'
-              : ''
-          }
-        >
-          ${escapeHtml(div.label)}
-        </option>
+            <option
+              value="${escapeHtml(
+                division.key
+              )}"
+              ${
+                division.key ===
+                'WAITLIST'
 
-      `)
-      .join('');
+                  ? 'selected'
+
+                  : ''
+              }
+            >
+
+              ${escapeHtml(
+                division.label
+              )}
+
+            </option>
+
+          `
+        )
+        .join(
+          ''
+        );
 
 
   addModal.classList.add(
@@ -2617,6 +3457,7 @@ function closeAddModal() {
 
 
 async function addTeam() {
+
 
   const teamName =
     document
@@ -2655,12 +3496,16 @@ async function addTeam() {
     action:
       'addTeam',
 
+
     team: {
+
 
       team:
         teamName,
 
+
       manager,
+
 
       division:
         document
@@ -2669,12 +3514,14 @@ async function addTeam() {
           )
           .value,
 
+
       intention:
         document
           .getElementById(
             'newIntention'
           )
           .value,
+
 
       comments:
         document
@@ -2683,6 +3530,7 @@ async function addTeam() {
           )
           .value
           .trim(),
+
 
       contact:
         document
@@ -2707,6 +3555,7 @@ async function addTeam() {
 
   try {
 
+
     await fetch(
       API_URL,
       {
@@ -2718,8 +3567,10 @@ async function addTeam() {
           'no-cors',
 
         headers: {
+
           'Content-Type':
             'text/plain;charset=utf-8'
+
         },
 
         body:
@@ -2749,11 +3600,19 @@ async function addTeam() {
 
   } catch (err) {
 
+
+    console.error(
+      err
+    );
+
+
     alert(
       'Could not add team.'
     );
 
+
   } finally {
+
 
     confirmAdd.disabled =
       false;
@@ -2777,7 +3636,35 @@ async function saveChanges() {
     !hasChanges() ||
     saving
   ) {
+
     return;
+
+  }
+
+
+  setError(
+    ''
+  );
+
+
+  /*
+   * Validate before sending anything.
+   */
+
+  try {
+
+    validateTeamState(
+      teams
+    );
+
+  } catch (err) {
+
+    setError(
+      err.message
+    );
+
+    return;
+
   }
 
 
@@ -2794,35 +3681,54 @@ async function saveChanges() {
 
   try {
 
+
     const payload = {
 
       action:
         'saveTeams',
 
+
+      /*
+       * Sending full list is fine,
+       * but backend STILL merges safely.
+       */
+
       teams:
-        teams.map(team => ({
+        teams.map(
+          team => ({
 
-          id:
-            team.id,
 
-          division:
-            normaliseDivision(
-              team.division
-            ),
+            id:
+              normaliseId(
+                team.id
+              ),
 
-          order:
-            team.order,
 
-          intention:
-            team.intention,
+            division:
+              normaliseDivision(
+                team.division
+              ),
 
-          comments:
-            team.comments,
 
-          contact:
-            team.contact
+            order:
+              Number(
+                team.order
+              ) || 999,
 
-        }))
+
+            intention:
+              team.intention,
+
+
+            comments:
+              team.comments,
+
+
+            contact:
+              team.contact
+
+          })
+        )
 
     };
 
@@ -2838,8 +3744,10 @@ async function saveChanges() {
           'no-cors',
 
         headers: {
+
           'Content-Type':
             'text/plain;charset=utf-8'
+
         },
 
         body:
@@ -2851,16 +3759,23 @@ async function saveChanges() {
     );
 
 
+    /*
+     * Apps Script no-cors response cannot
+     * be inspected, so re-read database.
+     */
+
     await sleep(
-      1000
+      1200
     );
 
 
     const response =
       await fetch(
+
         API_URL +
         '?action=getTeams&_=' +
         Date.now()
+
       );
 
 
@@ -2868,25 +3783,56 @@ async function saveChanges() {
       await response.json();
 
 
-    if (!data.success) {
+    if (
+      !data.success
+    ) {
 
       throw new Error(
         data.error ||
-        'Save failed'
+        'Save verification failed.'
+      );
+
+    }
+
+
+    const fresh =
+      normaliseTeams(
+        data.teams
+      );
+
+
+    validateTeamState(
+      fresh
+    );
+
+
+    /*
+     * Critical client-side integrity check.
+     *
+     * A save must never reduce total team count.
+     */
+
+    if (
+      fresh.length <
+      originalTeams.length
+    ) {
+
+      throw new Error(
+
+        'Safety check failed: database returned fewer teams after saving.'
+
       );
 
     }
 
 
     teams =
-      normaliseTeams(
-        data.teams
-      );
+      fresh;
 
 
     originalTeams =
       clone(
-        teams
+        fresh
       );
 
 
@@ -2896,26 +3842,40 @@ async function saveChanges() {
 
     render();
 
+
     updateControls();
 
 
     status.textContent =
-      `${teams.length} teams`;
+      teams.length +
+      ' teams';
 
 
     showToast(
-      'Changes saved'
+      'Changes saved safely'
     );
 
 
   } catch (err) {
+
+
+    console.error(
+      err
+    );
+
 
     setError(
       'Save failed: ' +
       err.message
     );
 
+
+    status.textContent =
+      'Save failed';
+
+
   } finally {
+
 
     saving =
       false;
@@ -2929,37 +3889,49 @@ async function saveChanges() {
 
 
 /************************************************************
- * STATE
+ * UNSAVED STATE
  ************************************************************/
 
-function comparable(list) {
+function comparable(
+  list
+) {
 
   return list
-    .map(team => ({
+    .map(
+      team => ({
 
-      id:
-        team.id,
 
-      division:
-        normaliseDivision(
-          team.division
-        ),
+        id:
+          normaliseId(
+            team.id
+          ),
 
-      order:
-        Number(
-          team.order
-        ),
 
-      intention:
-        team.intention,
+        division:
+          normaliseDivision(
+            team.division
+          ),
 
-      comments:
-        team.comments,
 
-      contact:
-        team.contact
+        order:
+          Number(
+            team.order
+          ),
 
-    }))
+
+        intention:
+          team.intention,
+
+
+        comments:
+          team.comments,
+
+
+        contact:
+          team.contact
+
+      })
+    )
     .sort(
       (a,b) =>
         a.id.localeCompare(
@@ -2974,10 +3946,14 @@ function hasChanges() {
 
   return (
     JSON.stringify(
-      comparable(teams)
+      comparable(
+        teams
+      )
     ) !==
     JSON.stringify(
-      comparable(originalTeams)
+      comparable(
+        originalTeams
+      )
     )
   );
 
@@ -3009,6 +3985,10 @@ function updateControls() {
     saving;
 
 
+  addTeamBtn.disabled =
+    saving;
+
+
   unsaved.classList.toggle(
     'show',
     changed
@@ -3018,12 +3998,39 @@ function updateControls() {
 
 
 /************************************************************
- * UNDO / DISCARD
+ * UNDO
  ************************************************************/
+
+function pushUndo() {
+
+  undoStack.push(
+    clone(
+      teams
+    )
+  );
+
+
+  /*
+   * Don't keep unlimited history.
+   */
+
+  if (
+    undoStack.length >
+    50
+  ) {
+
+    undoStack.shift();
+
+  }
+
+}
+
 
 function undo() {
 
-  if (!undoStack.length) {
+  if (
+    !undoStack.length
+  ) {
     return;
   }
 
@@ -3032,17 +4039,31 @@ function undo() {
     undoStack.pop();
 
 
+  validateTeamState(
+    teams
+  );
+
+
   render();
+
 
   updateControls();
 
 }
 
 
+/************************************************************
+ * DISCARD
+ ************************************************************/
+
 function discard() {
 
-  if (!hasChanges()) {
+  if (
+    !hasChanges()
+  ) {
+
     return;
+
   }
 
 
@@ -3051,7 +4072,9 @@ function discard() {
       'Discard all unsaved changes?'
     )
   ) {
+
     return;
+
   }
 
 
@@ -3067,13 +4090,14 @@ function discard() {
 
   render();
 
+
   updateControls();
 
 }
 
 
 /************************************************************
- * HELPERS
+ * DIVISION HELPERS
  ************************************************************/
 
 function getDivisionTeams(
@@ -3087,13 +4111,21 @@ function getDivisionTeams(
 
 
   return teams
-    .filter(team =>
-      normaliseDivision(
-        team.division
-      ) === division
+    .filter(
+      team =>
+        normaliseDivision(
+          team.division
+        ) ===
+        division
     )
     .sort(
-      sortTeams
+      (a,b) =>
+        Number(
+          a.order || 999
+        ) -
+        Number(
+          b.order || 999
+        )
     );
 
 }
@@ -3123,6 +4155,10 @@ function reindexDivision(
 
 }
 
+
+/************************************************************
+ * SORT
+ ************************************************************/
 
 function sortTeams(
   a,
@@ -3195,6 +4231,10 @@ function sortTeams(
 }
 
 
+/************************************************************
+ * INTENTION COLOUR
+ ************************************************************/
+
 function intentionClass(
   value
 ) {
@@ -3206,23 +4246,32 @@ function intentionClass(
 
 
   if (
-    text === 'CONFIRMED'
+    text ===
+    'CONFIRMED'
   ) {
+
     return 'confirmed';
+
   }
 
 
   if (
-    text === 'LIKELY'
+    text ===
+    'LIKELY'
   ) {
+
     return 'likely';
+
   }
 
 
   if (
-    text === 'UNLIKELY'
+    text ===
+    'UNLIKELY'
   ) {
+
     return 'unlikely';
+
   }
 
 
@@ -3231,7 +4280,13 @@ function intentionClass(
 }
 
 
-function clone(value) {
+/************************************************************
+ * HELPERS
+ ************************************************************/
+
+function clone(
+  value
+) {
 
   return JSON.parse(
     JSON.stringify(
@@ -3242,7 +4297,9 @@ function clone(value) {
 }
 
 
-function sleep(ms) {
+function sleep(
+  ms
+) {
 
   return new Promise(
     resolve =>
@@ -3255,7 +4312,9 @@ function sleep(ms) {
 }
 
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
   return String(
     value ?? ''
@@ -3323,10 +4382,13 @@ function showToast(
 
   toastTimer =
     setTimeout(
-      () =>
+      () => {
+
         toast.classList.remove(
           'show'
-        ),
+        );
+
+      },
       2200
     );
 
@@ -3365,13 +4427,16 @@ refreshBtn.addEventListener(
   'click',
   () => {
 
+
     if (
       hasChanges() &&
       !confirm(
         'Discard unsaved changes and refresh?'
       )
     ) {
+
       return;
+
     }
 
 
@@ -3403,6 +4468,7 @@ addModal.addEventListener(
   'click',
   event => {
 
+
     if (
       event.target ===
       addModal
@@ -3420,12 +4486,18 @@ window.addEventListener(
   'beforeunload',
   event => {
 
-    if (!hasChanges()) {
+
+    if (
+      !hasChanges()
+    ) {
+
       return;
+
     }
 
 
     event.preventDefault();
+
 
     event.returnValue =
       '';
