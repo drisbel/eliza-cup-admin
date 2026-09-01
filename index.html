@@ -1,1447 +1,2651 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eliza Cup Admin</title>
-
-  <style>
-    :root {
-      --bg: #0b1220;
-      --panel: #121a2b;
-      --panel-2: #182235;
-      --line: rgba(255,255,255,.09);
-      --text: #f5f7fb;
-      --muted: #9eabc2;
-      --accent: #4f7cff;
-      --accent-2: #2f5fe8;
-      --success: #1fa971;
-      --warning: #d89b2b;
-      --danger: #d9534f;
-      --shadow: 0 12px 30px rgba(0,0,0,.22);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .app-shell {
-      min-height: 100vh;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(11,18,32,.97);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .topbar-inner {
-      max-width: 1900px;
-      margin: 0 auto;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      justify-content: space-between;
-    }
-
-    .brand-title {
-      font-weight: 800;
-      font-size: 20px;
-    }
-
-    .brand-subtitle {
-      margin-top: 2px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .btn {
-      border: 1px solid var(--line);
-      background: var(--panel-2);
-      color: var(--text);
-      padding: 9px 12px;
-      border-radius: 9px;
-      font-weight: 700;
-      transition: .15s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.18);
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--accent-2);
-    }
-
-    .btn:disabled {
-      cursor: not-allowed;
-      opacity: .45;
-      transform: none;
-    }
-
-    .unsaved-pill {
-      display: none;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(216,155,43,.13);
-      color: #ffd98b;
-      border: 1px solid rgba(216,155,43,.3);
-      font-size: 12px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .unsaved-pill.show {
-      display: inline-flex;
-    }
-
-    .page {
-      max-width: 1900px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
-    }
-
-    .search-wrap {
-      flex: 1;
-      min-width: 240px;
-    }
-
-    .search {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--panel);
-      color: var(--text);
-      padding: 11px 13px;
-      outline: none;
-    }
-
-    .search:focus {
-      border-color: rgba(79,124,255,.75);
-      box-shadow: 0 0 0 3px rgba(79,124,255,.12);
-    }
-
-    .status-line {
-      font-size: 12px;
-      color: var(--muted);
-      margin-left: auto;
-    }
-
-    .division-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .division-card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .division-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      padding: 13px 15px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255,255,255,.025);
-    }
-
-    .division-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .division-title h2 {
-      margin: 0;
-      font-size: 14px;
-      letter-spacing: .4px;
-    }
-
-    .count-pill {
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.045);
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 8px;
-    }
-
-    .count-pill.over {
-      color: #ffb3b3;
-      border-color: rgba(217,83,79,.4);
-      background: rgba(217,83,79,.12);
-    }
-
-    .table-wrap {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      min-width: 1550px;
-      border-collapse: collapse;
-      table-layout: fixed;
-    }
-
-    thead th {
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      padding: 9px 8px;
-      font-size: 10px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .65px;
-      font-weight: 800;
-      text-align: left;
-      border-bottom: 1px solid var(--line);
-      background: #121a2b;
-    }
-
-    tbody tr {
-      border-bottom: 1px solid rgba(255,255,255,.055);
-      transition: background .12s ease;
-    }
-
-    tbody tr:last-child {
-      border-bottom: 0;
-    }
-
-    tbody tr:hover {
-      background: rgba(255,255,255,.025);
-    }
-
-    tbody tr.dragging {
-      opacity: .35;
-    }
-
-    tbody.drag-over {
-      background: rgba(79,124,255,.06);
-      outline: 2px dashed rgba(79,124,255,.4);
-      outline-offset: -4px;
-    }
-
-    td {
-      padding: 8px;
-      vertical-align: middle;
-      font-size: 12px;
-    }
-
-    .drag-col {
-      width: 34px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .drag-handle {
-      cursor: grab;
-      user-select: none;
-      font-size: 16px;
-      line-height: 1;
-    }
-
-    .drag-handle:active {
-      cursor: grabbing;
-    }
-
-    .id-col {
-      width: 72px;
-    }
-
-    .team-col {
-      width: 220px;
-    }
-
-    .manager-col {
-      width: 135px;
-    }
-
-    .previous-col {
-      width: 115px;
-    }
-
-    .overall-col {
-      width: 80px;
-    }
-
-    .conference-col {
-      width: 150px;
-    }
-
-    .intention-col {
-      width: 130px;
-    }
-
-    .comments-col {
-      width: 280px;
-    }
-
-    .contact-col {
-      width: 190px;
-    }
-
-    .move-col {
-      width: 130px;
-    }
-
-    .team-name {
-      font-weight: 800;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .read-only {
-      color: #d7deeb;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .field,
-    .field-select {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      background: #101827;
-      color: var(--text);
-      padding: 7px 8px;
-      outline: none;
-    }
-
-    .field:focus,
-    .field-select:focus {
-      border-color: rgba(79,124,255,.75);
-      box-shadow: 0 0 0 2px rgba(79,124,255,.1);
-    }
-
-    textarea.field {
-      resize: vertical;
-      min-height: 34px;
-      max-height: 110px;
-      line-height: 1.25;
-    }
-
-    .intention-confirmed {
-      border-color: rgba(31,169,113,.35);
-      color: #98e9c1;
-    }
-
-    .intention-likely {
-      border-color: rgba(79,124,255,.35);
-      color: #b5c9ff;
-    }
-
-    .intention-unlikely {
-      border-color: rgba(217,83,79,.4);
-      color: #ffc0bd;
-    }
-
-    .empty-row {
-      padding: 24px !important;
-      color: var(--muted);
-      text-align: center;
-      font-size: 11px;
-    }
-
-    .loading {
-      padding: 80px 20px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .error-panel {
-      display: none;
-      padding: 18px;
-      margin-bottom: 16px;
-      border-radius: 12px;
-      border: 1px solid rgba(217,83,79,.35);
-      background: rgba(217,83,79,.08);
-      color: #ffc3c1;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .error-panel.show {
-      display: block;
-    }
-
-    .toast {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 999;
-      background: #1a2537;
-      color: white;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 11px 14px;
-      box-shadow: var(--shadow);
-      font-size: 12px;
-      font-weight: 700;
-      transform: translateY(20px);
-      opacity: 0;
-      pointer-events: none;
-      transition: .2s ease;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .toast.success {
-      border-color: rgba(31,169,113,.35);
-    }
-
-    .toast.error {
-      border-color: rgba(217,83,79,.4);
-    }
-
-    .footer-note {
-      margin-top: 18px;
-      font-size: 11px;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    @media (max-width: 900px) {
-      .topbar-inner {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .header-actions {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      .page {
-        padding: 12px;
-      }
-
-      .toolbar {
-        align-items: stretch;
-      }
-
-      .status-line {
-        width: 100%;
-        margin-left: 0;
-      }
-
-      table {
-        min-width: 1450px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+<title>Eliza Cup Admin</title>
+
+<style>
+:root {
+  --bg: #000000;
+  --panel: #0b0b0b;
+  --panel2: #131313;
+  --line: #282828;
+
+  --text: #f4f4f4;
+  --muted: #888;
+
+  --yellow: #ffdd00;
+  --yellow-dark: #bda400;
+
+  --d1: #28427c;
+  --d2a: #bc3532;
+  --d2b: #990000;
+  --d3a: #6aa84f;
+  --d3b: #274e13;
+
+  --waitlist: #555;
+  --infill: #8b7400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* HEADER */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: rgba(0,0,0,.97);
+  border-bottom: 2px solid var(--yellow);
+}
+
+.topbar-inner {
+  max-width: 1900px;
+  margin: auto;
+
+  padding: 10px 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--yellow);
+}
+
+.brand-subtitle {
+  color: #888;
+  font-size: 11px;
+  margin-top: 1px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: 1px solid #333;
+  border-radius: 7px;
+
+  background: #151515;
+  color: #eee;
+
+  padding: 7px 10px;
+
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.btn:hover {
+  border-color: var(--yellow);
+}
+
+.btn-primary {
+  background: var(--yellow);
+  color: #000;
+  border-color: var(--yellow);
+
+  font-weight: 900;
+}
+
+.btn-primary:hover {
+  background: #ffe843;
+}
+
+.btn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.unsaved {
+  display: none;
+
+  color: var(--yellow);
+  font-size: 10px;
+  font-weight: 900;
+
+  border: 1px solid #665b00;
+  background: #211e00;
+
+  padding: 6px 8px;
+  border-radius: 999px;
+}
+
+.unsaved.show {
+  display: inline-block;
+}
+
+
+/* PAGE */
+
+.page {
+  max-width: 1900px;
+  margin: auto;
+
+  padding: 12px 14px 30px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 10px;
+}
+
+.search {
+  flex: 1;
+
+  border: 1px solid #333;
+  border-radius: 7px;
+
+  background: #0b0b0b;
+  color: white;
+
+  padding: 8px 10px;
+
+  font-size: 11px;
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--yellow);
+}
+
+.status {
+  color: #888;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+
+/* DIVISIONS */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.division {
+  background: var(--panel);
+
+  border: 1px solid #222;
+  border-radius: 8px;
+
+  overflow: hidden;
+}
+
+.division-header {
+  height: 32px;
+
+  padding: 0 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-left: 7px solid var(--division-colour);
+}
+
+.division-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.count {
+  background: rgba(0,0,0,.28);
+  border: 1px solid rgba(255,255,255,.15);
+
+  border-radius: 999px;
+
+  padding: 2px 6px;
+
+  font-size: 9px;
+}
+
+.count.over {
+  color: #ff8585;
+}
+
+.division[data-division="DIVISION 1"] {
+  --division-colour: var(--d1);
+}
+
+.division[data-division="DIVISION 2A"] {
+  --division-colour: var(--d2a);
+}
+
+.division[data-division="DIVISION 2B"] {
+  --division-colour: var(--d2b);
+}
+
+.division[data-division="DIVISION 3A"] {
+  --division-colour: var(--d3a);
+}
+
+.division[data-division="DIVISION 3B"] {
+  --division-colour: var(--d3b);
+}
+
+.division[data-division="WAITLIST"] {
+  --division-colour: var(--waitlist);
+}
+
+.division[data-division="INFILL"] {
+  --division-colour: var(--infill);
+}
+
+
+/* TABLE */
+
+.table-wrap {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+}
+
+th {
+  background: #050505;
+
+  color: #8c8c8c;
+
+  border-top: 1px solid #202020;
+  border-bottom: 1px solid #202020;
+
+  padding: 5px 4px;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  text-align: left;
+  text-transform: uppercase;
+
+  line-height: 1.1;
+}
+
+td {
+  padding: 4px;
+
+  border-bottom: 1px solid #191919;
+
+  font-size: 10px;
+
+  vertical-align: middle;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #101010;
+}
+
+tbody tr.dragging {
+  opacity: .3;
+}
+
+tbody.drag-over {
+  background: rgba(255,221,0,.04);
+}
+
+
+/* COLUMN WIDTHS */
+
+.col-drag {
+  width: 2%;
+}
+
+.col-id {
+  width: 4%;
+}
+
+.col-team {
+  width: 13%;
+}
+
+.col-manager {
+  width: 9%;
+}
+
+.col-prevdiv {
+  width: 7%;
+}
+
+.col-prevpos {
+  width: 6%;
+}
+
+.col-overall {
+  width: 5%;
+}
+
+.col-conference {
+  width: 9%;
+}
+
+.col-intention {
+  width: 8%;
+}
+
+.col-comments {
+  width: 16%;
+}
+
+.col-contact {
+  width: 12%;
+}
+
+.col-move {
+  width: 9%;
+}
+
+
+/* CELLS */
+
+.drag-handle {
+  cursor: grab;
+
+  color: #777;
+
+  font-size: 13px;
+  font-weight: 900;
+
+  text-align: center;
+}
+
+.team {
+  font-weight: 900;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.readonly {
+  color: #c4c4c4;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* INPUTS */
+
+.field {
+  width: 100%;
+
+  background: #080808;
+  color: #eee;
+
+  border: 1px solid #292929;
+  border-radius: 4px;
+
+  padding: 4px;
+
+  font-size: 9px;
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--yellow);
+}
+
+textarea.field {
+  resize: none;
+  height: 25px;
+
+  overflow: hidden;
+}
+
+.confirmed {
+  color: #9be4a2;
+}
+
+.likely {
+  color: #ffe36b;
+}
+
+.unlikely {
+  color: #ff8c8c;
+}
+
+
+/* ADD TEAM MODAL */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  z-index: 500;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px;
+
+  background: rgba(0,0,0,.8);
+}
+
+.modal-backdrop.show {
+  display: flex;
+}
+
+.modal {
+  width: min(520px, 100%);
+
+  background: #0d0d0d;
+
+  border: 1px solid #333;
+  border-top: 4px solid var(--yellow);
+
+  border-radius: 10px;
+
+  padding: 18px;
+}
+
+.modal h2 {
+  margin: 0 0 15px;
+
+  color: var(--yellow);
+
+  font-size: 18px;
+}
+
+.form-row {
+  margin-bottom: 10px;
+}
+
+.form-row label {
+  display: block;
+
+  color: #999;
+
+  margin-bottom: 4px;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  text-transform: uppercase;
+}
+
+.form-control {
+  width: 100%;
+
+  background: #050505;
+  color: #fff;
+
+  border: 1px solid #333;
+  border-radius: 6px;
+
+  padding: 8px;
+
+  font-size: 11px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--yellow);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 7px;
+
+  margin-top: 16px;
+}
+
+
+/* MESSAGES */
+
+.error {
+  display: none;
+
+  background: #260000;
+  color: #ffaaaa;
+
+  border: 1px solid #600;
+
+  padding: 10px;
+
+  border-radius: 6px;
+
+  font-size: 11px;
+
+  margin-bottom: 10px;
+}
+
+.error.show {
+  display: block;
+}
+
+.loading {
+  padding: 50px;
+  text-align: center;
+  color: #888;
+}
+
+.toast {
+  position: fixed;
+
+  right: 15px;
+  bottom: 15px;
+
+  z-index: 800;
+
+  background: #111;
+  color: var(--yellow);
+
+  border: 1px solid #555;
+  border-left: 4px solid var(--yellow);
+
+  border-radius: 6px;
+
+  padding: 9px 12px;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  opacity: 0;
+  transform: translateY(10px);
+
+  transition: .18s;
+
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* SMALL SCREEN */
+
+@media (max-width: 1100px) {
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 1300px;
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .topbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions {
+    justify-content: flex-start;
+  }
+
+  .page {
+    padding: 8px;
+  }
+
+}
+</style>
 </head>
 
 <body>
-  <div class="app-shell">
 
-    <header class="topbar">
-      <div class="topbar-inner">
-        <div class="brand">
-          <div class="brand-title">Eliza Cup Admin</div>
-          <div class="brand-subtitle">2026/27 Team & Division Management</div>
-        </div>
+<header class="topbar">
+  <div class="topbar-inner">
 
-        <div class="header-actions">
-          <span id="unsavedPill" class="unsaved-pill">
-            UNSAVED CHANGES
-          </span>
-
-          <button id="undoBtn" class="btn" disabled>
-            Undo
-          </button>
-
-          <button id="discardBtn" class="btn" disabled>
-            Discard
-          </button>
-
-          <button id="refreshBtn" class="btn">
-            Refresh
-          </button>
-
-          <button id="saveBtn" class="btn btn-primary" disabled>
-            Save Changes
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <main class="page">
-
-      <div id="errorPanel" class="error-panel"></div>
-
-      <div class="toolbar">
-        <div class="search-wrap">
-          <input
-            id="searchInput"
-            class="search"
-            type="search"
-            placeholder="Search team, manager, ID, comments or contact..."
-            autocomplete="off"
-          />
-        </div>
-
-        <div id="statusLine" class="status-line">
-          Loading teams...
-        </div>
+    <div>
+      <div class="brand-title">
+        ELIZA CUP ADMIN
       </div>
 
-      <div id="content">
-        <div class="loading">Loading Eliza Cup teams...</div>
+      <div class="brand-subtitle">
+        2026/27 Team Management
       </div>
+    </div>
 
-      <div class="footer-note">
-        Drag rows between divisions or use the Move dropdown.
-      </div>
+    <div class="actions">
 
-    </main>
+      <span
+        id="unsaved"
+        class="unsaved"
+      >
+        UNSAVED CHANGES
+      </span>
+
+      <button
+        id="addTeamBtn"
+        class="btn btn-primary"
+      >
+        + Add Team
+      </button>
+
+      <button
+        id="undoBtn"
+        class="btn"
+        disabled
+      >
+        Undo
+      </button>
+
+      <button
+        id="discardBtn"
+        class="btn"
+        disabled
+      >
+        Discard
+      </button>
+
+      <button
+        id="refreshBtn"
+        class="btn"
+      >
+        Refresh
+      </button>
+
+      <button
+        id="saveBtn"
+        class="btn btn-primary"
+        disabled
+      >
+        Save
+      </button>
+
+    </div>
+
+  </div>
+</header>
+
+
+<main class="page">
+
+  <div
+    id="error"
+    class="error"
+  ></div>
+
+  <div class="toolbar">
+
+    <input
+      id="search"
+      class="search"
+      placeholder="Search team, manager, ID, comments..."
+    >
+
+    <div
+      id="status"
+      class="status"
+    >
+      Loading...
+    </div>
+
   </div>
 
-  <div id="toast" class="toast"></div>
+  <div id="content">
+    <div class="loading">
+      Loading Eliza Cup teams...
+    </div>
+  </div>
 
-  <script>
-    const API_URL =
-      'https://script.google.com/macros/s/AKfycbweLNRiMQMu1nMlvKMTsJmur_NrMU688qqWaxzxR2qMMWUVS6FXcuaZvDpfZJoeXdrB/exec';
+</main>
 
-    const DIVISIONS = [
-      { key: 'DIVISION 1', label: 'Division 1', capacity: 14 },
-      { key: 'DIVISION 2A', label: 'Division 2A', capacity: 12 },
-      { key: 'DIVISION 2B', label: 'Division 2B', capacity: 12 },
-      { key: 'DIVISION 3A', label: 'Division 3A', capacity: 12 },
-      { key: 'DIVISION 3B', label: 'Division 3B', capacity: 12 },
-      { key: 'WAITLIST', label: 'Waitlist', capacity: null },
-      { key: 'INFILL', label: 'Infill', capacity: null }
-    ];
 
-    const CONFERENCE_OPTIONS = [
-      '',
-      'DIVISION 1',
-      'DIVISION 2A',
-      'DIVISION 2B',
-      'DIVISION 3A',
-      'DIVISION 3B',
-      'WAITLIST',
-      'INFILL'
-    ];
+<div
+  id="addModal"
+  class="modal-backdrop"
+>
 
-    const INTENTION_OPTIONS = [
-      '',
-      'CONFIRMED',
-      'LIKELY',
-      'UNLIKELY'
-    ];
+  <div class="modal">
 
-    let teams = [];
-    let originalTeams = [];
-    let undoStack = [];
-    let isSaving = false;
-    let draggedTeamId = null;
+    <h2>Add Team</h2>
 
-    const content = document.getElementById('content');
-    const searchInput = document.getElementById('searchInput');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const undoBtn = document.getElementById('undoBtn');
-    const discardBtn = document.getElementById('discardBtn');
-    const unsavedPill = document.getElementById('unsavedPill');
-    const statusLine = document.getElementById('statusLine');
-    const errorPanel = document.getElementById('errorPanel');
-    const toast = document.getElementById('toast');
+    <div class="form-row">
+      <label>Team Name</label>
 
-    async function loadTeams() {
-      setError('');
-      content.innerHTML =
-        '<div class="loading">Loading Eliza Cup teams...</div>';
+      <input
+        id="newTeam"
+        class="form-control"
+      >
+    </div>
 
-      statusLine.textContent = 'Loading teams...';
+    <div class="form-row">
+      <label>Manager</label>
 
-      try {
-        const response = await fetch(
-          API_URL + '?action=getTeams&_=' + Date.now()
-        );
+      <input
+        id="newManager"
+        class="form-control"
+      >
+    </div>
 
-        if (!response.ok) {
-          throw new Error('API returned HTTP ' + response.status);
-        }
+    <div class="form-row">
+      <label>Destination</label>
 
-        const data = await response.json();
+      <select
+        id="newDivision"
+        class="form-control"
+      ></select>
+    </div>
 
-        if (!data.success) {
-          throw new Error(data.error || 'Unable to load team data.');
-        }
+    <div class="form-row">
+      <label>Intention to Play</label>
 
-        teams = normaliseTeamList(data.teams || []);
-        originalTeams = deepClone(teams);
-        undoStack = [];
+      <select
+        id="newIntention"
+        class="form-control"
+      >
+        <option value=""></option>
+        <option>CONFIRMED</option>
+        <option>LIKELY</option>
+        <option>UNLIKELY</option>
+      </select>
+    </div>
 
-        render();
-        updateControls();
+    <div class="form-row">
+      <label>Comments</label>
 
-        statusLine.textContent =
-          teams.length + ' teams loaded';
+      <textarea
+        id="newComments"
+        class="form-control"
+      ></textarea>
+    </div>
 
-      } catch (error) {
-        console.error(error);
+    <div class="form-row">
+      <label>Contact Method / Primary Chat</label>
 
-        setError(
-          'Could not load the Eliza Cup Admin data. ' +
-          'Make sure the Apps Script deployment is updated to the latest version. ' +
-          'Error: ' + error.message
-        );
+      <input
+        id="newContact"
+        class="form-control"
+      >
+    </div>
 
-        content.innerHTML =
-          '<div class="loading">Unable to load teams.</div>';
+    <div class="modal-actions">
 
-        statusLine.textContent = 'Load failed';
-      }
+      <button
+        id="cancelAdd"
+        class="btn"
+      >
+        Cancel
+      </button>
+
+      <button
+        id="confirmAdd"
+        class="btn btn-primary"
+      >
+        Add Team
+      </button>
+
+    </div>
+
+  </div>
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script>
+
+const API_URL =
+'https://script.google.com/macros/s/AKfycbweLNRiMQMu1nMlvKMTsJmur_NrMU688qqWaxzxR2qMMWUVS6FXcuaZvDpfZJoeXdrB/exec';
+
+
+const DIVISIONS = [
+
+  {
+    key: 'DIVISION 1',
+    label: 'Division 1',
+    capacity: 14
+  },
+
+  {
+    key: 'DIVISION 2A',
+    label: 'Division 2A',
+    capacity: 12
+  },
+
+  {
+    key: 'DIVISION 2B',
+    label: 'Division 2B',
+    capacity: 12
+  },
+
+  {
+    key: 'DIVISION 3A',
+    label: 'Division 3A',
+    capacity: 12
+  },
+
+  {
+    key: 'DIVISION 3B',
+    label: 'Division 3B',
+    capacity: 12
+  },
+
+  {
+    key: 'WAITLIST',
+    label: 'Waitlist',
+    capacity: null
+  },
+
+  {
+    key: 'INFILL',
+    label: 'Infill',
+    capacity: null
+  }
+
+];
+
+
+const INTENTIONS = [
+  '',
+  'CONFIRMED',
+  'LIKELY',
+  'UNLIKELY'
+];
+
+
+let teams = [];
+let originalTeams = [];
+let undoStack = [];
+
+let draggedId = null;
+let saving = false;
+
+
+const content =
+document.getElementById('content');
+
+const search =
+document.getElementById('search');
+
+const status =
+document.getElementById('status');
+
+const error =
+document.getElementById('error');
+
+const unsaved =
+document.getElementById('unsaved');
+
+const saveBtn =
+document.getElementById('saveBtn');
+
+const undoBtn =
+document.getElementById('undoBtn');
+
+const discardBtn =
+document.getElementById('discardBtn');
+
+const refreshBtn =
+document.getElementById('refreshBtn');
+
+const addTeamBtn =
+document.getElementById('addTeamBtn');
+
+const addModal =
+document.getElementById('addModal');
+
+const cancelAdd =
+document.getElementById('cancelAdd');
+
+const confirmAdd =
+document.getElementById('confirmAdd');
+
+const toast =
+document.getElementById('toast');
+
+
+/***********************************************************
+ * LOAD
+ ***********************************************************/
+
+async function loadTeams() {
+
+  setError('');
+
+  status.textContent =
+    'Loading...';
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getTeams&_=' +
+        Date.now()
+      );
+
+    const data =
+      await response.json();
+
+    if (!data.success) {
+      throw new Error(
+        data.error ||
+        'Unable to load teams.'
+      );
     }
 
-    function normaliseTeamList(list) {
-      return list
-        .map(item => ({
-          id: String(item.id || '').trim(),
-          team: String(item.team || '').trim(),
-          manager: String(item.manager || '').trim(),
-          division: String(item.division || '').trim(),
-          order: Number(item.order) || 999,
-          conference: String(item.conference || '').trim(),
-          intention: String(item.intention || '').trim(),
-          previousDivision:
-            String(item.previousDivision || '').trim(),
-          overall: String(item.overall || '').trim(),
-          comments: String(item.comments || '').trim(),
-          contact: String(item.contact || '').trim()
-        }))
-        .sort(sortTeams);
-    }
+    teams =
+      normaliseTeams(data.teams);
 
-    function render() {
-      const query =
-        searchInput.value.trim().toLowerCase();
+    originalTeams =
+      clone(teams);
 
-      const wrapper = document.createElement('div');
-      wrapper.className = 'division-stack';
+    undoStack = [];
 
-      DIVISIONS.forEach(div => {
-        const allDivisionTeams = getDivisionTeams(div.key);
+    render();
+    updateControls();
 
-        const filteredTeams = allDivisionTeams.filter(team => {
-          if (!query) return true;
+    status.textContent =
+      `${teams.length} teams`;
 
-          return [
-            team.id,
-            team.team,
-            team.manager,
-            team.division,
-            team.conference,
-            team.intention,
-            team.previousDivision,
-            team.overall,
-            team.comments,
-            team.contact
-          ]
-            .join(' ')
-            .toLowerCase()
-            .includes(query);
-        });
+  } catch (err) {
 
-        const card = document.createElement('section');
-        card.className = 'division-card';
+    console.error(err);
 
-        const overCapacity =
-          div.capacity !== null &&
-          allDivisionTeams.length > div.capacity;
+    setError(
+      'Unable to load portal data: ' +
+      err.message
+    );
 
-        const countText =
-          div.capacity === null
-            ? allDivisionTeams.length
-            : allDivisionTeams.length + ' / ' + div.capacity;
+  }
 
-        card.innerHTML = `
-          <div class="division-header">
-            <div class="division-title">
-              <h2>${escapeHtml(div.label)}</h2>
-              <span class="count-pill ${overCapacity ? 'over' : ''}">
-                ${countText}
-              </span>
-            </div>
-          </div>
+}
 
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th class="drag-col"></th>
-                  <th class="id-col">ID</th>
-                  <th class="team-col">Team</th>
-                  <th class="manager-col">Manager</th>
-                  <th class="previous-col">Previous</th>
-                  <th class="overall-col">Overall</th>
-                  <th class="conference-col">26/27 Conference</th>
-                  <th class="intention-col">Intention</th>
-                  <th class="comments-col">Comments</th>
-                  <th class="contact-col">Contact</th>
-                  <th class="move-col">Move</th>
-                </tr>
-              </thead>
 
-              <tbody data-division="${escapeHtml(div.key)}">
-                ${buildRows(filteredTeams)}
-              </tbody>
-            </table>
-          </div>
-        `;
+/***********************************************************
+ * NORMALISE
+ ***********************************************************/
 
-        wrapper.appendChild(card);
+function normaliseTeams(list) {
+
+  return (list || [])
+    .map(t => ({
+
+      id:
+        String(t.id || '').trim(),
+
+      team:
+        String(t.team || '').trim(),
+
+      manager:
+        String(t.manager || '').trim(),
+
+      division:
+        String(t.division || '').trim(),
+
+      order:
+        Number(t.order) || 999,
+
+      conference:
+        String(t.conference || '').trim(),
+
+      intention:
+        String(t.intention || '').trim(),
+
+      previousDivision:
+        String(
+          t.previousDivision || ''
+        ).trim(),
+
+      previousPosition:
+        String(
+          t.previousPosition || ''
+        ).trim(),
+
+      overall:
+        String(t.overall || '').trim(),
+
+      comments:
+        String(t.comments || '').trim(),
+
+      contact:
+        String(t.contact || '').trim()
+
+    }))
+    .sort(sortTeams);
+
+}
+
+
+/***********************************************************
+ * RENDER
+ ***********************************************************/
+
+function render() {
+
+  const query =
+    search.value
+      .trim()
+      .toLowerCase();
+
+  const wrapper =
+    document.createElement('div');
+
+  wrapper.className =
+    'stack';
+
+
+  DIVISIONS.forEach(div => {
+
+    const fullList =
+      getDivisionTeams(div.key);
+
+    const displayList =
+      fullList.filter(team => {
+
+        if (!query) {
+          return true;
+        }
+
+        return [
+
+          team.id,
+          team.team,
+          team.manager,
+
+          team.previousDivision,
+          team.previousPosition,
+          team.overall,
+
+          team.conference,
+          team.intention,
+          team.comments,
+          team.contact
+
+        ]
+          .join(' ')
+          .toLowerCase()
+          .includes(query);
+
       });
 
-      content.innerHTML = '';
-      content.appendChild(wrapper);
 
-      attachDragHandlers();
-      attachMoveHandlers();
-      attachEditableHandlers();
-    }
+    const section =
+      document.createElement(
+        'section'
+      );
 
-    function buildRows(list) {
-      if (!list.length) {
-        return `
-          <tr>
-            <td colspan="11" class="empty-row">
-              No teams
-            </td>
-          </tr>
-        `;
-      }
+    section.className =
+      'division';
 
-      return list.map(team => `
-        <tr draggable="true" data-team-id="${escapeHtml(team.id)}">
+    section.dataset.division =
+      div.key;
 
-          <td class="drag-col">
-            <span class="drag-handle" title="Drag">⋮⋮</span>
-          </td>
 
-          <td class="id-col read-only">
-            ${escapeHtml(team.id || '—')}
-          </td>
+    const countText =
+      div.capacity === null
 
-          <td class="team-col">
-            <div class="team-name">
-              ${escapeHtml(team.team || team.manager || 'Unnamed Team')}
-            </div>
-          </td>
+        ? fullList.length
 
-          <td class="manager-col read-only">
-            ${escapeHtml(team.manager || '—')}
-          </td>
+        : `${fullList.length} / ${div.capacity}`;
 
-          <td class="previous-col read-only">
-            ${escapeHtml(team.previousDivision || '—')}
-          </td>
 
-          <td class="overall-col read-only">
-            ${escapeHtml(team.overall || '—')}
-          </td>
+    const over =
+      div.capacity !== null &&
+      fullList.length >
+      div.capacity;
 
-          <td class="conference-col">
-            <select
-              class="field-select conference-input"
-              data-team-id="${escapeHtml(team.id)}"
-            >
-              ${buildOptions(CONFERENCE_OPTIONS, team.conference)}
-            </select>
-          </td>
 
-          <td class="intention-col">
-            <select
-              class="field-select intention-input ${intentionClass(team.intention)}"
-              data-team-id="${escapeHtml(team.id)}"
-            >
-              ${buildOptions(INTENTION_OPTIONS, team.intention)}
-            </select>
-          </td>
+    section.innerHTML = `
 
-          <td class="comments-col">
-            <textarea
-              class="field comments-input"
-              data-team-id="${escapeHtml(team.id)}"
-              rows="1"
-            >${escapeHtml(team.comments)}</textarea>
-          </td>
+      <div class="division-header">
 
-          <td class="contact-col">
-            <input
-              class="field contact-input"
-              data-team-id="${escapeHtml(team.id)}"
-              type="text"
-              value="${escapeHtml(team.contact)}"
-            />
-          </td>
+        <div class="division-name">
 
-          <td class="move-col">
-            <select
-              class="field-select move-select"
-              data-team-id="${escapeHtml(team.id)}"
-            >
-              ${buildDivisionOptions(team.division)}
-            </select>
-          </td>
-
-        </tr>
-      `).join('');
-    }
-
-    function buildOptions(options, currentValue) {
-      const hasCurrent =
-        currentValue &&
-        !options.includes(currentValue);
-
-      const combined =
-        hasCurrent
-          ? [...options, currentValue]
-          : options;
-
-      return combined.map(option => `
-        <option
-          value="${escapeHtml(option)}"
-          ${option === currentValue ? 'selected' : ''}
-        >
-          ${escapeHtml(option || '—')}
-        </option>
-      `).join('');
-    }
-
-    function buildDivisionOptions(currentDivision) {
-      return DIVISIONS.map(div => `
-        <option
-          value="${escapeHtml(div.key)}"
-          ${div.key === currentDivision ? 'selected' : ''}
-        >
           ${escapeHtml(div.label)}
-        </option>
-      `).join('');
-    }
 
-    function intentionClass(value) {
-      const upper = String(value || '').toUpperCase();
+          <span class="
+            count
+            ${over ? 'over' : ''}
+          ">
+            ${countText}
+          </span>
 
-      if (upper === 'CONFIRMED') return 'intention-confirmed';
-      if (upper === 'LIKELY') return 'intention-likely';
-      if (upper === 'UNLIKELY') return 'intention-unlikely';
+        </div>
 
-      return '';
-    }
+      </div>
 
-    function attachEditableHandlers() {
-      document.querySelectorAll('.conference-input').forEach(input => {
-        input.addEventListener('change', () => {
-          updateTeamField(
-            input.dataset.teamId,
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th class="col-drag"></th>
+
+              <th class="col-id">
+                ID
+              </th>
+
+              <th class="col-team">
+                Team
+              </th>
+
+              <th class="col-manager">
+                Manager
+              </th>
+
+              <th class="col-prevdiv">
+                Prev Div
+              </th>
+
+              <th class="col-prevpos">
+                Prev Pos
+              </th>
+
+              <th class="col-overall">
+                Overall
+              </th>
+
+              <th class="col-conference">
+                26/27 Conf
+              </th>
+
+              <th class="col-intention">
+                Intention
+              </th>
+
+              <th class="col-comments">
+                Comments
+              </th>
+
+              <th class="col-contact">
+                Contact
+              </th>
+
+              <th class="col-move">
+                Move
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody
+            data-division="${escapeHtml(div.key)}"
+          >
+
+            ${buildRows(displayList)}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    `;
+
+    wrapper.appendChild(section);
+
+  });
+
+
+  content.innerHTML = '';
+
+  content.appendChild(wrapper);
+
+  attachEditing();
+  attachMoving();
+  attachDrag();
+
+}
+
+
+/***********************************************************
+ * ROWS
+ ***********************************************************/
+
+function buildRows(list) {
+
+  if (!list.length) {
+
+    return `
+
+      <tr>
+
+        <td
+          colspan="12"
+          style="
+            text-align:center;
+            padding:12px;
+            color:#666
+          "
+        >
+          No teams
+        </td>
+
+      </tr>
+
+    `;
+
+  }
+
+
+  return list
+    .map(team => `
+
+      <tr
+        draggable="true"
+        data-team-id="${escapeHtml(team.id)}"
+      >
+
+        <td class="col-drag">
+
+          <div class="drag-handle">
+            ⋮⋮
+          </div>
+
+        </td>
+
+
+        <td class="readonly">
+          ${escapeHtml(team.id)}
+        </td>
+
+
+        <td>
+
+          <div
+            class="team"
+            title="${escapeHtml(team.team)}"
+          >
+            ${
+              escapeHtml(
+                team.team ||
+                team.manager ||
+                'Unnamed'
+              )
+            }
+          </div>
+
+        </td>
+
+
+        <td
+          class="readonly"
+          title="${escapeHtml(team.manager)}"
+        >
+          ${escapeHtml(team.manager || '—')}
+        </td>
+
+
+        <td class="readonly">
+          ${
+            escapeHtml(
+              team.previousDivision ||
+              '—'
+            )
+          }
+        </td>
+
+
+        <td class="readonly">
+          ${
+            escapeHtml(
+              team.previousPosition ||
+              '—'
+            )
+          }
+        </td>
+
+
+        <td class="readonly">
+          ${escapeHtml(team.overall || '—')}
+        </td>
+
+
+        <td>
+
+          <select
+            class="field conference"
+            data-id="${escapeHtml(team.id)}"
+          >
+
+            ${
+              buildDivisionOptions(
+                team.conference,
+                true
+              )
+            }
+
+          </select>
+
+        </td>
+
+
+        <td>
+
+          <select
+            class="
+              field
+              intention
+              ${intentionClass(team.intention)}
+            "
+            data-id="${escapeHtml(team.id)}"
+          >
+
+            ${
+              INTENTIONS
+                .map(value => `
+
+                  <option
+                    value="${escapeHtml(value)}"
+                    ${
+                      value ===
+                      team.intention
+                        ? 'selected'
+                        : ''
+                    }
+                  >
+                    ${
+                      escapeHtml(
+                        value || '—'
+                      )
+                    }
+                  </option>
+
+                `)
+                .join('')
+            }
+
+          </select>
+
+        </td>
+
+
+        <td>
+
+          <textarea
+            class="field comments"
+            data-id="${escapeHtml(team.id)}"
+          >${escapeHtml(team.comments)}</textarea>
+
+        </td>
+
+
+        <td>
+
+          <input
+            class="field contact"
+            data-id="${escapeHtml(team.id)}"
+            value="${escapeHtml(team.contact)}"
+          >
+
+        </td>
+
+
+        <td>
+
+          <select
+            class="field move"
+            data-id="${escapeHtml(team.id)}"
+          >
+
+            ${
+              buildDivisionOptions(
+                team.division,
+                false
+              )
+            }
+
+          </select>
+
+        </td>
+
+      </tr>
+
+    `)
+    .join('');
+
+}
+
+
+/***********************************************************
+ * OPTIONS
+ ***********************************************************/
+
+function buildDivisionOptions(
+  current,
+  allowBlank
+) {
+
+  let html = '';
+
+  if (allowBlank) {
+
+    html += `
+
+      <option value="">
+        —
+      </option>
+
+    `;
+
+  }
+
+
+  DIVISIONS.forEach(div => {
+
+    html += `
+
+      <option
+        value="${escapeHtml(div.key)}"
+        ${
+          current === div.key
+            ? 'selected'
+            : ''
+        }
+      >
+        ${escapeHtml(div.label)}
+      </option>
+
+    `;
+
+  });
+
+
+  return html;
+
+}
+
+
+/***********************************************************
+ * EDIT FIELDS
+ ***********************************************************/
+
+function attachEditing() {
+
+  document
+    .querySelectorAll(
+      '.conference'
+    )
+    .forEach(input => {
+
+      input.addEventListener(
+        'change',
+        () => {
+
+          editField(
+            input.dataset.id,
             'conference',
             input.value
           );
-        });
-      });
 
-      document.querySelectorAll('.intention-input').forEach(input => {
-        input.addEventListener('change', () => {
-          updateTeamField(
-            input.dataset.teamId,
+        }
+      );
+
+    });
+
+
+  document
+    .querySelectorAll(
+      '.intention'
+    )
+    .forEach(input => {
+
+      input.addEventListener(
+        'change',
+        () => {
+
+          editField(
+            input.dataset.id,
             'intention',
             input.value
           );
 
-          input.classList.remove(
-            'intention-confirmed',
-            'intention-likely',
-            'intention-unlikely'
-          );
+          render();
 
-          const css = intentionClass(input.value);
-          if (css) input.classList.add(css);
-        });
-      });
+        }
+      );
 
-      document.querySelectorAll('.comments-input').forEach(input => {
-        input.addEventListener('input', () => {
-          updateTeamField(
-            input.dataset.teamId,
+    });
+
+
+  document
+    .querySelectorAll(
+      '.comments'
+    )
+    .forEach(input => {
+
+      input.addEventListener(
+        'input',
+        () => {
+
+          editField(
+            input.dataset.id,
             'comments',
             input.value,
             false
           );
-        });
-      });
 
-      document.querySelectorAll('.contact-input').forEach(input => {
-        input.addEventListener('input', () => {
-          updateTeamField(
-            input.dataset.teamId,
+        }
+      );
+
+    });
+
+
+  document
+    .querySelectorAll(
+      '.contact'
+    )
+    .forEach(input => {
+
+      input.addEventListener(
+        'input',
+        () => {
+
+          editField(
+            input.dataset.id,
             'contact',
             input.value,
             false
           );
-        });
-      });
-    }
 
-    function updateTeamField(teamId, field, value, rerender = false) {
-      const team = teams.find(item => item.id === teamId);
+        }
+      );
 
-      if (!team) return;
+    });
 
-      if (team[field] === value) return;
+}
 
-      const beforeSnapshot = deepClone(teams);
 
-      team[field] = value;
+function editField(
+  id,
+  field,
+  value,
+  snapshot = true
+) {
 
-      undoStack.push(beforeSnapshot);
+  const team =
+    teams.find(t =>
+      t.id === id
+    );
 
-      if (rerender) {
-        render();
-      }
+  if (!team) return;
 
-      updateControls();
-    }
+  if (
+    team[field] ===
+    value
+  ) {
+    return;
+  }
 
-    function attachMoveHandlers() {
-      document.querySelectorAll('.move-select').forEach(select => {
-        select.addEventListener('change', () => {
+  if (snapshot) {
+    undoStack.push(
+      clone(teams)
+    );
+  }
+
+  team[field] =
+    value;
+
+  updateControls();
+
+}
+
+
+/***********************************************************
+ * MOVE
+ ***********************************************************/
+
+function attachMoving() {
+
+  document
+    .querySelectorAll('.move')
+    .forEach(select => {
+
+      select.addEventListener(
+        'change',
+        () => {
+
           moveTeam(
-            select.dataset.teamId,
-            select.value,
-            null
+            select.dataset.id,
+            select.value
           );
-        });
-      });
+
+        }
+      );
+
+    });
+
+}
+
+
+function moveTeam(
+  id,
+  division,
+  beforeId = null
+) {
+
+  const team =
+    teams.find(t =>
+      t.id === id
+    );
+
+  if (!team) return;
+
+
+  if (
+    team.division === division &&
+    !beforeId
+  ) {
+    return;
+  }
+
+
+  undoStack.push(
+    clone(teams)
+  );
+
+
+  const oldDivision =
+    team.division;
+
+
+  team.division =
+    division;
+
+
+  let divisionTeams =
+    teams
+      .filter(t =>
+        t.division === division &&
+        t.id !== id
+      )
+      .sort(sortTeams);
+
+
+  let position =
+    divisionTeams.length;
+
+
+  if (beforeId) {
+
+    const found =
+      divisionTeams.findIndex(
+        t => t.id === beforeId
+      );
+
+    if (found !== -1) {
+      position = found;
     }
 
-    function attachDragHandlers() {
-      document
-        .querySelectorAll('tbody tr[data-team-id]')
-        .forEach(row => {
+  }
 
-          row.addEventListener('dragstart', event => {
-            draggedTeamId = row.dataset.teamId;
-            row.classList.add('dragging');
 
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setData(
+  divisionTeams.splice(
+    position,
+    0,
+    team
+  );
+
+
+  divisionTeams.forEach(
+    (t, index) => {
+      t.order =
+        index + 1;
+    }
+  );
+
+
+  reindexDivision(
+    oldDivision
+  );
+
+
+  render();
+  updateControls();
+
+}
+
+
+/***********************************************************
+ * DRAG
+ ***********************************************************/
+
+function attachDrag() {
+
+  document
+    .querySelectorAll(
+      'tr[data-team-id]'
+    )
+    .forEach(row => {
+
+      row.addEventListener(
+        'dragstart',
+        event => {
+
+          draggedId =
+            row.dataset.teamId;
+
+          row.classList.add(
+            'dragging'
+          );
+
+          event.dataTransfer
+            .setData(
               'text/plain',
-              draggedTeamId
+              draggedId
             );
-          });
 
-          row.addEventListener('dragend', () => {
-            draggedTeamId = null;
-            row.classList.remove('dragging');
+        }
+      );
 
-            document.querySelectorAll('tbody').forEach(body =>
-              body.classList.remove('drag-over')
+
+      row.addEventListener(
+        'dragend',
+        () => {
+
+          row.classList.remove(
+            'dragging'
+          );
+
+          draggedId = null;
+
+        }
+      );
+
+    });
+
+
+  document
+    .querySelectorAll(
+      'tbody[data-division]'
+    )
+    .forEach(body => {
+
+      body.addEventListener(
+        'dragover',
+        event => {
+
+          event.preventDefault();
+
+          body.classList.add(
+            'drag-over'
+          );
+
+        }
+      );
+
+
+      body.addEventListener(
+        'dragleave',
+        () => {
+
+          body.classList.remove(
+            'drag-over'
+          );
+
+        }
+      );
+
+
+      body.addEventListener(
+        'drop',
+        event => {
+
+          event.preventDefault();
+
+          body.classList.remove(
+            'drag-over'
+          );
+
+          const id =
+            draggedId ||
+            event.dataTransfer
+              .getData(
+                'text/plain'
+              );
+
+          const target =
+            event.target.closest(
+              'tr[data-team-id]'
             );
-          });
-        });
 
-      document
-        .querySelectorAll('tbody[data-division]')
-        .forEach(body => {
-
-          body.addEventListener('dragover', event => {
-            event.preventDefault();
-            body.classList.add('drag-over');
-          });
-
-          body.addEventListener('dragleave', event => {
-            if (!body.contains(event.relatedTarget)) {
-              body.classList.remove('drag-over');
-            }
-          });
-
-          body.addEventListener('drop', event => {
-            event.preventDefault();
-            body.classList.remove('drag-over');
-
-            const teamId =
-              draggedTeamId ||
-              event.dataTransfer.getData('text/plain');
-
-            const division = body.dataset.division;
-
-            if (!teamId || !division) return;
-
-            const targetRow =
-              event.target.closest('tr[data-team-id]');
-
-            const targetTeamId =
-              targetRow ? targetRow.dataset.teamId : null;
-
-            moveTeam(teamId, division, targetTeamId);
-          });
-        });
-    }
-
-    function moveTeam(teamId, newDivision, beforeTeamId) {
-      const team = teams.find(item => item.id === teamId);
-
-      if (!team) return;
-
-      const beforeSnapshot = deepClone(teams);
-      const oldDivision = team.division;
-
-      if (oldDivision === newDivision && !beforeTeamId) {
-        return;
-      }
-
-      team.division = newDivision;
-
-      const divisionTeams = teams
-        .filter(item =>
-          item.division === newDivision &&
-          item.id !== teamId
-        )
-        .sort(sortTeams);
-
-      let insertIndex = divisionTeams.length;
-
-      if (beforeTeamId) {
-        const foundIndex = divisionTeams.findIndex(
-          item => item.id === beforeTeamId
-        );
-
-        if (foundIndex !== -1) {
-          insertIndex = foundIndex;
-        }
-      }
-
-      divisionTeams.splice(insertIndex, 0, team);
-
-      divisionTeams.forEach((item, index) => {
-        item.order = index + 1;
-      });
-
-      if (oldDivision !== newDivision) {
-        reindexDivision(oldDivision);
-      }
-
-      undoStack.push(beforeSnapshot);
-
-      render();
-      updateControls();
-
-      showToast(
-        (team.team || team.manager || 'Team') +
-        ' moved to ' +
-        displayDivision(newDivision)
-      );
-    }
-
-    function reindexDivision(division) {
-      const list = teams
-        .filter(team => team.division === division)
-        .sort(sortTeams);
-
-      list.forEach((team, index) => {
-        team.order = index + 1;
-      });
-    }
-
-    function undoLast() {
-      if (!undoStack.length) return;
-
-      teams = undoStack.pop();
-
-      render();
-      updateControls();
-
-      showToast('Last change undone');
-    }
-
-    function discardChanges() {
-      if (!hasChanges()) return;
-
-      const okay = confirm(
-        'Discard all unsaved changes?'
-      );
-
-      if (!okay) return;
-
-      teams = deepClone(originalTeams);
-      undoStack = [];
-
-      render();
-      updateControls();
-
-      showToast('Changes discarded');
-    }
-
-    async function saveChanges() {
-      if (!hasChanges() || isSaving) return;
-
-      isSaving = true;
-      updateControls();
-
-      statusLine.textContent = 'Saving changes...';
-
-      try {
-        const payload = {
-          action: 'saveTeams',
-          teams: teams.map(team => ({
-            id: team.id,
-            division: team.division,
-            order: team.order,
-            conference: team.conference,
-            intention: team.intention,
-            comments: team.comments,
-            contact: team.contact
-          }))
-        };
-
-        await fetch(API_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        await sleep(1000);
-
-        const verifyResponse = await fetch(
-          API_URL + '?action=getTeams&_=' + Date.now()
-        );
-
-        const verifyData = await verifyResponse.json();
-
-        if (!verifyData.success) {
-          throw new Error(
-            verifyData.error ||
-            'Save verification failed.'
+          moveTeam(
+            id,
+            body.dataset.division,
+            target
+              ? target.dataset.teamId
+              : null
           );
+
         }
-
-        const serverTeams =
-          normaliseTeamList(verifyData.teams || []);
-
-        if (!sameTeamState(teams, serverTeams)) {
-          throw new Error(
-            'The save was sent, but the stored data does not match the portal yet.'
-          );
-        }
-
-        teams = serverTeams;
-        originalTeams = deepClone(serverTeams);
-        undoStack = [];
-
-        render();
-        updateControls();
-
-        statusLine.textContent =
-          teams.length + ' teams loaded';
-
-        showToast(
-          'Changes saved successfully',
-          'success'
-        );
-
-      } catch (error) {
-        console.error(error);
-
-        setError(
-          'The changes could not be confirmed as saved. ' +
-          error.message
-        );
-
-        statusLine.textContent = 'Save failed';
-
-        showToast('Save failed', 'error');
-
-      } finally {
-        isSaving = false;
-        updateControls();
-      }
-    }
-
-    function hasChanges() {
-      return !sameTeamState(
-        teams,
-        originalTeams
       );
+
+    });
+
+}
+
+
+/***********************************************************
+ * ADD TEAM
+ ***********************************************************/
+
+function openAddModal() {
+
+  document.getElementById(
+    'newTeam'
+  ).value = '';
+
+  document.getElementById(
+    'newManager'
+  ).value = '';
+
+  document.getElementById(
+    'newIntention'
+  ).value = '';
+
+  document.getElementById(
+    'newComments'
+  ).value = '';
+
+  document.getElementById(
+    'newContact'
+  ).value = '';
+
+
+  const divisionSelect =
+    document.getElementById(
+      'newDivision'
+    );
+
+  divisionSelect.innerHTML =
+    DIVISIONS
+      .map(div => `
+
+        <option
+          value="${escapeHtml(div.key)}"
+          ${
+            div.key ===
+            'WAITLIST'
+              ? 'selected'
+              : ''
+          }
+        >
+          ${escapeHtml(div.label)}
+        </option>
+
+      `)
+      .join('');
+
+
+  addModal.classList.add(
+    'show'
+  );
+
+
+  document.getElementById(
+    'newTeam'
+  ).focus();
+
+}
+
+
+function closeAddModal() {
+
+  addModal.classList.remove(
+    'show'
+  );
+
+}
+
+
+async function addTeam() {
+
+  const teamName =
+    document.getElementById(
+      'newTeam'
+    ).value.trim();
+
+  if (!teamName) {
+
+    alert(
+      'Enter a team name.'
+    );
+
+    return;
+
+  }
+
+
+  const payload = {
+
+    action: 'addTeam',
+
+    team: {
+
+      team: teamName,
+
+      manager:
+        document.getElementById(
+          'newManager'
+        ).value.trim(),
+
+      division:
+        document.getElementById(
+          'newDivision'
+        ).value,
+
+      intention:
+        document.getElementById(
+          'newIntention'
+        ).value,
+
+      comments:
+        document.getElementById(
+          'newComments'
+        ).value.trim(),
+
+      contact:
+        document.getElementById(
+          'newContact'
+        ).value.trim()
+
     }
 
-    function sameTeamState(listA, listB) {
-      const cleanA = comparableList(listA);
-      const cleanB = comparableList(listB);
+  };
 
-      return JSON.stringify(cleanA) === JSON.stringify(cleanB);
-    }
 
-    function comparableList(list) {
-      return list
-        .map(team => ({
-          id: team.id,
-          division: team.division,
-          order: Number(team.order),
-          conference: team.conference || '',
-          intention: team.intention || '',
-          comments: team.comments || '',
-          contact: team.contact || ''
+  confirmAdd.disabled = true;
+
+  confirmAdd.textContent =
+    'Adding...';
+
+
+  try {
+
+    await fetch(
+      API_URL,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body:
+          JSON.stringify(payload)
+      }
+    );
+
+
+    await sleep(900);
+
+    closeAddModal();
+
+    await loadTeams();
+
+    showToast(
+      'Team added'
+    );
+
+  } catch (err) {
+
+    alert(
+      'Could not add team.'
+    );
+
+  } finally {
+
+    confirmAdd.disabled =
+      false;
+
+    confirmAdd.textContent =
+      'Add Team';
+
+  }
+
+}
+
+
+/***********************************************************
+ * SAVE
+ ***********************************************************/
+
+async function saveChanges() {
+
+  if (
+    !hasChanges() ||
+    saving
+  ) {
+    return;
+  }
+
+
+  saving = true;
+
+  updateControls();
+
+  status.textContent =
+    'Saving...';
+
+
+  try {
+
+    const payload = {
+
+      action: 'saveTeams',
+
+      teams:
+        teams.map(team => ({
+
+          id:
+            team.id,
+
+          division:
+            team.division,
+
+          order:
+            team.order,
+
+          conference:
+            team.conference,
+
+          intention:
+            team.intention,
+
+          comments:
+            team.comments,
+
+          contact:
+            team.contact
+
         }))
-        .sort((a, b) =>
-          a.id.localeCompare(b.id)
+
+    };
+
+
+    await fetch(
+      API_URL,
+      {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body:
+          JSON.stringify(payload)
+      }
+    );
+
+
+    await sleep(900);
+
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getTeams&_=' +
+        Date.now()
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+
+      throw new Error(
+        data.error ||
+        'Save verification failed.'
+      );
+
+    }
+
+
+    const server =
+      normaliseTeams(
+        data.teams
+      );
+
+
+    if (
+      !sameState(
+        teams,
+        server
+      )
+    ) {
+
+      throw new Error(
+        'Saved data could not be verified.'
+      );
+
+    }
+
+
+    teams = server;
+
+    originalTeams =
+      clone(server);
+
+    undoStack = [];
+
+    render();
+    updateControls();
+
+    status.textContent =
+      `${teams.length} teams`;
+
+    showToast(
+      'Changes saved'
+    );
+
+
+  } catch (err) {
+
+    setError(
+      'Save failed: ' +
+      err.message
+    );
+
+
+  } finally {
+
+    saving = false;
+
+    updateControls();
+
+  }
+
+}
+
+
+/***********************************************************
+ * STATE
+ ***********************************************************/
+
+function sameState(a, b) {
+
+  return JSON.stringify(
+    comparable(a)
+  ) ===
+  JSON.stringify(
+    comparable(b)
+  );
+
+}
+
+
+function comparable(list) {
+
+  return list
+    .map(t => ({
+
+      id:
+        t.id,
+
+      division:
+        t.division,
+
+      order:
+        Number(t.order),
+
+      conference:
+        t.conference,
+
+      intention:
+        t.intention,
+
+      comments:
+        t.comments,
+
+      contact:
+        t.contact
+
+    }))
+    .sort(
+      (a, b) =>
+        a.id.localeCompare(b.id)
+    );
+
+}
+
+
+function hasChanges() {
+
+  return !sameState(
+    teams,
+    originalTeams
+  );
+
+}
+
+
+function updateControls() {
+
+  const changed =
+    hasChanges();
+
+  saveBtn.disabled =
+    !changed ||
+    saving;
+
+  discardBtn.disabled =
+    !changed ||
+    saving;
+
+  undoBtn.disabled =
+    !undoStack.length ||
+    saving;
+
+  refreshBtn.disabled =
+    saving;
+
+  unsaved.classList.toggle(
+    'show',
+    changed
+  );
+
+}
+
+
+/***********************************************************
+ * UNDO / DISCARD
+ ***********************************************************/
+
+function undo() {
+
+  if (!undoStack.length) {
+    return;
+  }
+
+  teams =
+    undoStack.pop();
+
+  render();
+  updateControls();
+
+}
+
+
+function discard() {
+
+  if (!hasChanges()) {
+    return;
+  }
+
+  if (
+    !confirm(
+      'Discard all unsaved changes?'
+    )
+  ) {
+    return;
+  }
+
+  teams =
+    clone(originalTeams);
+
+  undoStack = [];
+
+  render();
+  updateControls();
+
+}
+
+
+/***********************************************************
+ * HELPERS
+ ***********************************************************/
+
+function getDivisionTeams(
+  division
+) {
+
+  return teams
+    .filter(
+      team =>
+        team.division === division
+    )
+    .sort(sortTeams);
+
+}
+
+
+function reindexDivision(
+  division
+) {
+
+  getDivisionTeams(
+    division
+  )
+    .forEach(
+      (team, index) => {
+        team.order =
+          index + 1;
+      }
+    );
+
+}
+
+
+function sortTeams(a, b) {
+
+  const da =
+    DIVISIONS.findIndex(
+      d =>
+        d.key ===
+        a.division
+    );
+
+  const db =
+    DIVISIONS.findIndex(
+      d =>
+        d.key ===
+        b.division
+    );
+
+  if (da !== db) {
+    return da - db;
+  }
+
+  return (
+    Number(a.order || 999) -
+    Number(b.order || 999)
+  );
+
+}
+
+
+function intentionClass(
+  value
+) {
+
+  const v =
+    String(value)
+      .toUpperCase();
+
+  if (
+    v === 'CONFIRMED'
+  ) {
+    return 'confirmed';
+  }
+
+  if (
+    v === 'LIKELY'
+  ) {
+    return 'likely';
+  }
+
+  if (
+    v === 'UNLIKELY'
+  ) {
+    return 'unlikely';
+  }
+
+  return '';
+
+}
+
+
+function clone(value) {
+
+  return JSON.parse(
+    JSON.stringify(value)
+  );
+
+}
+
+
+function sleep(ms) {
+
+  return new Promise(
+    resolve =>
+      setTimeout(
+        resolve,
+        ms
+      )
+  );
+
+}
+
+
+function escapeHtml(value) {
+
+  return String(
+    value ?? ''
+  )
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+    .replace(
+      /</g,
+      '&lt;'
+    )
+    .replace(
+      />/g,
+      '&gt;'
+    )
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+    .replace(
+      /'/g,
+      '&#039;'
+    );
+
+}
+
+
+function setError(message) {
+
+  error.textContent =
+    message;
+
+  error.classList.toggle(
+    'show',
+    !!message
+  );
+
+}
+
+
+let toastTimer;
+
+function showToast(message) {
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toast.textContent =
+    message;
+
+  toast.classList.add(
+    'show'
+  );
+
+  toastTimer =
+    setTimeout(
+      () => {
+        toast.classList.remove(
+          'show'
         );
+      },
+      2200
+    );
+
+}
+
+
+/***********************************************************
+ * EVENTS
+ ***********************************************************/
+
+search.addEventListener(
+  'input',
+  render
+);
+
+
+saveBtn.addEventListener(
+  'click',
+  saveChanges
+);
+
+
+undoBtn.addEventListener(
+  'click',
+  undo
+);
+
+
+discardBtn.addEventListener(
+  'click',
+  discard
+);
+
+
+refreshBtn.addEventListener(
+  'click',
+  () => {
+
+    if (
+      hasChanges() &&
+      !confirm(
+        'Discard unsaved changes and refresh?'
+      )
+    ) {
+      return;
     }
-
-    function updateControls() {
-      const changed = hasChanges();
-
-      saveBtn.disabled =
-        !changed || isSaving;
-
-      discardBtn.disabled =
-        !changed || isSaving;
-
-      undoBtn.disabled =
-        !undoStack.length || isSaving;
-
-      refreshBtn.disabled =
-        isSaving;
-
-      unsavedPill.classList.toggle(
-        'show',
-        changed
-      );
-
-      if (changed) {
-        const count = countChangedTeams();
-
-        unsavedPill.textContent =
-          count +
-          (count === 1
-            ? ' UNSAVED CHANGE'
-            : ' UNSAVED CHANGES');
-      }
-    }
-
-    function countChangedTeams() {
-      const originalMap = {};
-
-      originalTeams.forEach(team => {
-        originalMap[team.id] =
-          JSON.stringify({
-            division: team.division,
-            order: Number(team.order),
-            conference: team.conference || '',
-            intention: team.intention || '',
-            comments: team.comments || '',
-            contact: team.contact || ''
-          });
-      });
-
-      return teams.filter(team => {
-        const current = JSON.stringify({
-          division: team.division,
-          order: Number(team.order),
-          conference: team.conference || '',
-          intention: team.intention || '',
-          comments: team.comments || '',
-          contact: team.contact || ''
-        });
-
-        return originalMap[team.id] !== current;
-      }).length;
-    }
-
-    function getDivisionTeams(division) {
-      return teams
-        .filter(team => team.division === division)
-        .sort(sortTeams);
-    }
-
-    function sortTeams(a, b) {
-      const divA = DIVISIONS.findIndex(
-        div => div.key === a.division
-      );
-
-      const divB = DIVISIONS.findIndex(
-        div => div.key === b.division
-      );
-
-      if (divA !== divB) {
-        return divA - divB;
-      }
-
-      const orderA = Number(a.order) || 999;
-      const orderB = Number(b.order) || 999;
-
-      if (orderA !== orderB) {
-        return orderA - orderB;
-      }
-
-      return String(a.team)
-        .localeCompare(String(b.team));
-    }
-
-    function displayDivision(key) {
-      const found = DIVISIONS.find(
-        div => div.key === key
-      );
-
-      return found ? found.label : key;
-    }
-
-    function deepClone(value) {
-      return JSON.parse(JSON.stringify(value));
-    }
-
-    function sleep(ms) {
-      return new Promise(resolve =>
-        setTimeout(resolve, ms)
-      );
-    }
-
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function setError(message) {
-      if (!message) {
-        errorPanel.textContent = '';
-        errorPanel.classList.remove('show');
-        return;
-      }
-
-      errorPanel.textContent = message;
-      errorPanel.classList.add('show');
-    }
-
-    let toastTimer = null;
-
-    function showToast(message, type = '') {
-      clearTimeout(toastTimer);
-
-      toast.textContent = message;
-      toast.className = 'toast';
-
-      if (type) {
-        toast.classList.add(type);
-      }
-
-      requestAnimationFrame(() => {
-        toast.classList.add('show');
-      });
-
-      toastTimer = setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2500);
-    }
-
-    searchInput.addEventListener('input', render);
-
-    refreshBtn.addEventListener('click', () => {
-      if (hasChanges()) {
-        const okay = confirm(
-          'Refresh and discard unsaved changes?'
-        );
-
-        if (!okay) return;
-      }
-
-      loadTeams();
-    });
-
-    undoBtn.addEventListener('click', undoLast);
-    discardBtn.addEventListener('click', discardChanges);
-    saveBtn.addEventListener('click', saveChanges);
-
-    window.addEventListener('beforeunload', event => {
-      if (!hasChanges()) return;
-
-      event.preventDefault();
-      event.returnValue = '';
-    });
 
     loadTeams();
-  </script>
+
+  }
+);
+
+
+addTeamBtn.addEventListener(
+  'click',
+  openAddModal
+);
+
+
+cancelAdd.addEventListener(
+  'click',
+  closeAddModal
+);
+
+
+confirmAdd.addEventListener(
+  'click',
+  addTeam
+);
+
+
+addModal.addEventListener(
+  'click',
+  event => {
+
+    if (
+      event.target ===
+      addModal
+    ) {
+
+      closeAddModal();
+
+    }
+
+  }
+);
+
+
+window.addEventListener(
+  'beforeunload',
+  event => {
+
+    if (!hasChanges()) {
+      return;
+    }
+
+    event.preventDefault();
+
+    event.returnValue = '';
+
+  }
+);
+
+
+/***********************************************************
+ * START
+ ***********************************************************/
+
+loadTeams();
+
+</script>
+
 </body>
 </html>
