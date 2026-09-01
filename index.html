@@ -47,7 +47,8 @@
 
     button,
     input,
-    select {
+    select,
+    textarea {
       font: inherit;
     }
 
@@ -63,13 +64,13 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(11, 18, 32, .96);
+      background: rgba(11,18,32,.97);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--line);
     }
 
     .topbar-inner {
-      max-width: 1500px;
+      max-width: 1900px;
       margin: 0 auto;
       padding: 14px 20px;
       display: flex;
@@ -78,14 +79,9 @@
       justify-content: space-between;
     }
 
-    .brand {
-      min-width: 0;
-    }
-
     .brand-title {
       font-weight: 800;
       font-size: 20px;
-      letter-spacing: .2px;
     }
 
     .brand-subtitle {
@@ -137,9 +133,9 @@
       display: none;
       padding: 8px 10px;
       border-radius: 999px;
-      background: rgba(216, 155, 43, .13);
+      background: rgba(216,155,43,.13);
       color: #ffd98b;
-      border: 1px solid rgba(216, 155, 43, .3);
+      border: 1px solid rgba(216,155,43,.3);
       font-size: 12px;
       font-weight: 800;
       white-space: nowrap;
@@ -150,7 +146,7 @@
     }
 
     .page {
-      max-width: 1500px;
+      max-width: 1900px;
       margin: 0 auto;
       padding: 20px;
     }
@@ -179,8 +175,8 @@
     }
 
     .search:focus {
-      border-color: rgba(79, 124, 255, .75);
-      box-shadow: 0 0 0 3px rgba(79, 124, 255, .12);
+      border-color: rgba(79,124,255,.75);
+      box-shadow: 0 0 0 3px rgba(79,124,255,.12);
     }
 
     .status-line {
@@ -189,9 +185,9 @@
       margin-left: auto;
     }
 
-    .division-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .division-stack {
+      display: flex;
+      flex-direction: column;
       gap: 16px;
     }
 
@@ -201,11 +197,6 @@
       border-radius: 14px;
       overflow: hidden;
       box-shadow: var(--shadow);
-      min-width: 0;
-    }
-
-    .division-card.full-width {
-      grid-column: 1 / -1;
     }
 
     .division-header {
@@ -222,7 +213,6 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      min-width: 0;
     }
 
     .division-title h2 {
@@ -249,24 +239,29 @@
 
     .table-wrap {
       width: 100%;
-      overflow: hidden;
+      overflow-x: auto;
     }
 
     table {
       width: 100%;
+      min-width: 1550px;
       border-collapse: collapse;
       table-layout: fixed;
     }
 
     thead th {
-      padding: 9px 10px;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 9px 8px;
       font-size: 10px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: .7px;
+      letter-spacing: .65px;
       font-weight: 800;
       text-align: left;
       border-bottom: 1px solid var(--line);
+      background: #121a2b;
     }
 
     tbody tr {
@@ -293,10 +288,9 @@
     }
 
     td {
-      padding: 9px 10px;
+      padding: 8px;
       vertical-align: middle;
       font-size: 12px;
-      overflow: hidden;
     }
 
     .drag-col {
@@ -316,8 +310,44 @@
       cursor: grabbing;
     }
 
-    .team-cell {
-      min-width: 0;
+    .id-col {
+      width: 72px;
+    }
+
+    .team-col {
+      width: 220px;
+    }
+
+    .manager-col {
+      width: 135px;
+    }
+
+    .previous-col {
+      width: 115px;
+    }
+
+    .overall-col {
+      width: 80px;
+    }
+
+    .conference-col {
+      width: 150px;
+    }
+
+    .intention-col {
+      width: 130px;
+    }
+
+    .comments-col {
+      width: 280px;
+    }
+
+    .contact-col {
+      width: 190px;
+    }
+
+    .move-col {
+      width: 130px;
     }
 
     .team-name {
@@ -327,73 +357,54 @@
       text-overflow: ellipsis;
     }
 
-    .team-meta {
-      margin-top: 2px;
+    .read-only {
+      color: #d7deeb;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .muted {
       color: var(--muted);
-      font-size: 10px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .manager-cell {
-      width: 140px;
-      color: #d3daea;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .status-cell {
-      width: 108px;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      max-width: 100%;
-      padding: 4px 7px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.035);
-      color: var(--muted);
-      font-size: 9px;
-      font-weight: 900;
-      letter-spacing: .3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .status-confirmed {
-      color: #8de6bd;
-      background: rgba(31,169,113,.11);
-      border-color: rgba(31,169,113,.3);
-    }
-
-    .status-likely {
-      color: #a9c2ff;
-      background: rgba(79,124,255,.11);
-      border-color: rgba(79,124,255,.28);
-    }
-
-    .status-unlikely {
-      color: #ffbfbc;
-      background: rgba(217,83,79,.1);
-      border-color: rgba(217,83,79,.28);
-    }
-
-    .move-cell {
-      width: 126px;
-    }
-
-    .move-select {
+    .field,
+    .field-select {
       width: 100%;
-      background: #111a2a;
-      color: var(--text);
       border: 1px solid var(--line);
       border-radius: 7px;
-      padding: 6px 7px;
-      font-size: 10px;
+      background: #101827;
+      color: var(--text);
+      padding: 7px 8px;
+      outline: none;
+    }
+
+    .field:focus,
+    .field-select:focus {
+      border-color: rgba(79,124,255,.75);
+      box-shadow: 0 0 0 2px rgba(79,124,255,.1);
+    }
+
+    textarea.field {
+      resize: vertical;
+      min-height: 34px;
+      max-height: 110px;
+      line-height: 1.25;
+    }
+
+    .intention-confirmed {
+      border-color: rgba(31,169,113,.35);
+      color: #98e9c1;
+    }
+
+    .intention-likely {
+      border-color: rgba(79,124,255,.35);
+      color: #b5c9ff;
+    }
+
+    .intention-unlikely {
+      border-color: rgba(217,83,79,.4);
+      color: #ffc0bd;
     }
 
     .empty-row {
@@ -464,21 +475,7 @@
       text-align: center;
     }
 
-    @media (max-width: 980px) {
-      .division-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .division-card.full-width {
-        grid-column: auto;
-      }
-
-      .manager-cell {
-        width: 120px;
-      }
-    }
-
-    @media (max-width: 720px) {
+    @media (max-width: 900px) {
       .topbar-inner {
         align-items: flex-start;
         flex-direction: column;
@@ -502,25 +499,8 @@
         margin-left: 0;
       }
 
-      .manager-cell,
-      .status-cell {
-        display: none;
-      }
-
-      .drag-col {
-        width: 28px;
-      }
-
-      .move-cell {
-        width: 110px;
-      }
-
-      .team-name {
-        font-size: 12px;
-      }
-
-      td {
-        padding: 9px 7px;
+      table {
+        min-width: 1450px;
       }
     }
   </style>
@@ -570,7 +550,7 @@
             id="searchInput"
             class="search"
             type="search"
-            placeholder="Search team or manager..."
+            placeholder="Search team, manager, ID, comments or contact..."
             autocomplete="off"
           />
         </div>
@@ -585,7 +565,7 @@
       </div>
 
       <div class="footer-note">
-        Drag teams between divisions or use the Move dropdown on mobile.
+        Drag rows between divisions or use the Move dropdown.
       </div>
 
     </main>
@@ -593,52 +573,36 @@
 
   <div id="toast" class="toast"></div>
 
-
   <script>
-    /***************************************************************
-     * ELIZA CUP ADMIN FRONTEND
-     ***************************************************************/
-
     const API_URL =
       'https://script.google.com/macros/s/AKfycbweLNRiMQMu1nMlvKMTsJmur_NrMU688qqWaxzxR2qMMWUVS6FXcuaZvDpfZJoeXdrB/exec';
 
     const DIVISIONS = [
-      {
-        key: 'DIVISION 1',
-        label: 'Division 1',
-        capacity: 14
-      },
-      {
-        key: 'DIVISION 2A',
-        label: 'Division 2A',
-        capacity: 12
-      },
-      {
-        key: 'DIVISION 2B',
-        label: 'Division 2B',
-        capacity: 12
-      },
-      {
-        key: 'DIVISION 3A',
-        label: 'Division 3A',
-        capacity: 12
-      },
-      {
-        key: 'DIVISION 3B',
-        label: 'Division 3B',
-        capacity: 12
-      },
-      {
-        key: 'WAITLIST',
-        label: 'Waitlist',
-        capacity: null
-      },
-      {
-        key: 'INFILL',
-        label: 'Infill',
-        capacity: null,
-        fullWidth: true
-      }
+      { key: 'DIVISION 1', label: 'Division 1', capacity: 14 },
+      { key: 'DIVISION 2A', label: 'Division 2A', capacity: 12 },
+      { key: 'DIVISION 2B', label: 'Division 2B', capacity: 12 },
+      { key: 'DIVISION 3A', label: 'Division 3A', capacity: 12 },
+      { key: 'DIVISION 3B', label: 'Division 3B', capacity: 12 },
+      { key: 'WAITLIST', label: 'Waitlist', capacity: null },
+      { key: 'INFILL', label: 'Infill', capacity: null }
+    ];
+
+    const CONFERENCE_OPTIONS = [
+      '',
+      'DIVISION 1',
+      'DIVISION 2A',
+      'DIVISION 2B',
+      'DIVISION 3A',
+      'DIVISION 3B',
+      'WAITLIST',
+      'INFILL'
+    ];
+
+    const INTENTION_OPTIONS = [
+      '',
+      'CONFIRMED',
+      'LIKELY',
+      'UNLIKELY'
     ];
 
     let teams = [];
@@ -658,10 +622,6 @@
     const errorPanel = document.getElementById('errorPanel');
     const toast = document.getElementById('toast');
 
-
-    /***************************************************************
-     * LOAD
-     ***************************************************************/
     async function loadTeams() {
       setError('');
       content.innerHTML =
@@ -675,17 +635,13 @@
         );
 
         if (!response.ok) {
-          throw new Error(
-            'API returned HTTP ' + response.status
-          );
+          throw new Error('API returned HTTP ' + response.status);
         }
 
         const data = await response.json();
 
         if (!data.success) {
-          throw new Error(
-            data.error || 'Unable to load team data.'
-          );
+          throw new Error(data.error || 'Unable to load team data.');
         }
 
         teams = normaliseTeamList(data.teams || []);
@@ -703,8 +659,7 @@
 
         setError(
           'Could not load the Eliza Cup Admin data. ' +
-          'Make sure the Apps Script deployment is set to "Anyone" ' +
-          'and that you deployed the latest version. ' +
+          'Make sure the Apps Script deployment is updated to the latest version. ' +
           'Error: ' + error.message
         );
 
@@ -715,10 +670,6 @@
       }
     }
 
-
-    /***************************************************************
-     * NORMALISE
-     ***************************************************************/
     function normaliseTeamList(list) {
       return list
         .map(item => ({
@@ -727,6 +678,7 @@
           manager: String(item.manager || '').trim(),
           division: String(item.division || '').trim(),
           order: Number(item.order) || 999,
+          conference: String(item.conference || '').trim(),
           intention: String(item.intention || '').trim(),
           previousDivision:
             String(item.previousDivision || '').trim(),
@@ -737,16 +689,12 @@
         .sort(sortTeams);
     }
 
-
-    /***************************************************************
-     * RENDER
-     ***************************************************************/
     function render() {
       const query =
         searchInput.value.trim().toLowerCase();
 
       const wrapper = document.createElement('div');
-      wrapper.className = 'division-grid';
+      wrapper.className = 'division-stack';
 
       DIVISIONS.forEach(div => {
         const allDivisionTeams = getDivisionTeams(div.key);
@@ -754,23 +702,25 @@
         const filteredTeams = allDivisionTeams.filter(team => {
           if (!query) return true;
 
-          const haystack = [
+          return [
+            team.id,
             team.team,
             team.manager,
-            team.id,
+            team.division,
+            team.conference,
             team.intention,
-            team.previousDivision
+            team.previousDivision,
+            team.overall,
+            team.comments,
+            team.contact
           ]
             .join(' ')
-            .toLowerCase();
-
-          return haystack.includes(query);
+            .toLowerCase()
+            .includes(query);
         });
 
         const card = document.createElement('section');
-        card.className =
-          'division-card' +
-          (div.fullWidth ? ' full-width' : '');
+        card.className = 'division-card';
 
         const overCapacity =
           div.capacity !== null &&
@@ -796,10 +746,16 @@
               <thead>
                 <tr>
                   <th class="drag-col"></th>
-                  <th>Team</th>
-                  <th class="manager-cell">Manager</th>
-                  <th class="status-cell">Status</th>
-                  <th class="move-cell">Move</th>
+                  <th class="id-col">ID</th>
+                  <th class="team-col">Team</th>
+                  <th class="manager-col">Manager</th>
+                  <th class="previous-col">Previous</th>
+                  <th class="overall-col">Overall</th>
+                  <th class="conference-col">26/27 Conference</th>
+                  <th class="intention-col">Intention</th>
+                  <th class="comments-col">Comments</th>
+                  <th class="contact-col">Contact</th>
+                  <th class="move-col">Move</th>
                 </tr>
               </thead>
 
@@ -818,135 +774,223 @@
 
       attachDragHandlers();
       attachMoveHandlers();
+      attachEditableHandlers();
     }
-
 
     function buildRows(list) {
       if (!list.length) {
         return `
           <tr>
-            <td colspan="5" class="empty-row">
+            <td colspan="11" class="empty-row">
               No teams
             </td>
           </tr>
         `;
       }
 
-      return list
-        .map(team => {
-          const displayName =
-            team.team || team.manager || 'Unnamed Team';
+      return list.map(team => `
+        <tr draggable="true" data-team-id="${escapeHtml(team.id)}">
 
-          return `
-            <tr
-              draggable="true"
+          <td class="drag-col">
+            <span class="drag-handle" title="Drag">⋮⋮</span>
+          </td>
+
+          <td class="id-col read-only">
+            ${escapeHtml(team.id || '—')}
+          </td>
+
+          <td class="team-col">
+            <div class="team-name">
+              ${escapeHtml(team.team || team.manager || 'Unnamed Team')}
+            </div>
+          </td>
+
+          <td class="manager-col read-only">
+            ${escapeHtml(team.manager || '—')}
+          </td>
+
+          <td class="previous-col read-only">
+            ${escapeHtml(team.previousDivision || '—')}
+          </td>
+
+          <td class="overall-col read-only">
+            ${escapeHtml(team.overall || '—')}
+          </td>
+
+          <td class="conference-col">
+            <select
+              class="field-select conference-input"
               data-team-id="${escapeHtml(team.id)}"
             >
-              <td class="drag-col">
-                <span class="drag-handle" title="Drag">
-                  ⋮⋮
-                </span>
-              </td>
+              ${buildOptions(CONFERENCE_OPTIONS, team.conference)}
+            </select>
+          </td>
 
-              <td class="team-cell">
-                <div class="team-name">
-                  ${escapeHtml(displayName)}
-                </div>
-
-                <div class="team-meta">
-                  ${buildMeta(team)}
-                </div>
-              </td>
-
-              <td class="manager-cell">
-                ${escapeHtml(team.manager || '—')}
-              </td>
-
-              <td class="status-cell">
-                ${buildStatusBadge(team.intention)}
-              </td>
-
-              <td class="move-cell">
-                <select
-                  class="move-select"
-                  data-team-id="${escapeHtml(team.id)}"
-                >
-                  ${buildMoveOptions(team.division)}
-                </select>
-              </td>
-            </tr>
-          `;
-        })
-        .join('');
-    }
-
-
-    function buildMeta(team) {
-      const parts = [];
-
-      if (team.id) {
-        parts.push('#' + team.id);
-      }
-
-      if (team.previousDivision) {
-        parts.push('Prev: ' + team.previousDivision);
-      }
-
-      if (team.overall) {
-        parts.push('Overall: ' + team.overall);
-      }
-
-      return escapeHtml(parts.join(' • '));
-    }
-
-
-    function buildStatusBadge(value) {
-      if (!value) {
-        return '<span class="status-badge">—</span>';
-      }
-
-      const upper = value.toUpperCase();
-
-      let css = '';
-
-      if (upper === 'CONFIRMED') {
-        css = 'status-confirmed';
-      } else if (upper === 'LIKELY') {
-        css = 'status-likely';
-      } else if (upper === 'UNLIKELY') {
-        css = 'status-unlikely';
-      }
-
-      return `
-        <span class="status-badge ${css}">
-          ${escapeHtml(value)}
-        </span>
-      `;
-    }
-
-
-    function buildMoveOptions(currentDivision) {
-      return DIVISIONS
-        .map(div => {
-          const selected =
-            div.key === currentDivision ? 'selected' : '';
-
-          return `
-            <option
-              value="${escapeHtml(div.key)}"
-              ${selected}
+          <td class="intention-col">
+            <select
+              class="field-select intention-input ${intentionClass(team.intention)}"
+              data-team-id="${escapeHtml(team.id)}"
             >
-              ${escapeHtml(div.label)}
-            </option>
-          `;
-        })
-        .join('');
+              ${buildOptions(INTENTION_OPTIONS, team.intention)}
+            </select>
+          </td>
+
+          <td class="comments-col">
+            <textarea
+              class="field comments-input"
+              data-team-id="${escapeHtml(team.id)}"
+              rows="1"
+            >${escapeHtml(team.comments)}</textarea>
+          </td>
+
+          <td class="contact-col">
+            <input
+              class="field contact-input"
+              data-team-id="${escapeHtml(team.id)}"
+              type="text"
+              value="${escapeHtml(team.contact)}"
+            />
+          </td>
+
+          <td class="move-col">
+            <select
+              class="field-select move-select"
+              data-team-id="${escapeHtml(team.id)}"
+            >
+              ${buildDivisionOptions(team.division)}
+            </select>
+          </td>
+
+        </tr>
+      `).join('');
     }
 
+    function buildOptions(options, currentValue) {
+      const hasCurrent =
+        currentValue &&
+        !options.includes(currentValue);
 
-    /***************************************************************
-     * DRAG & DROP
-     ***************************************************************/
+      const combined =
+        hasCurrent
+          ? [...options, currentValue]
+          : options;
+
+      return combined.map(option => `
+        <option
+          value="${escapeHtml(option)}"
+          ${option === currentValue ? 'selected' : ''}
+        >
+          ${escapeHtml(option || '—')}
+        </option>
+      `).join('');
+    }
+
+    function buildDivisionOptions(currentDivision) {
+      return DIVISIONS.map(div => `
+        <option
+          value="${escapeHtml(div.key)}"
+          ${div.key === currentDivision ? 'selected' : ''}
+        >
+          ${escapeHtml(div.label)}
+        </option>
+      `).join('');
+    }
+
+    function intentionClass(value) {
+      const upper = String(value || '').toUpperCase();
+
+      if (upper === 'CONFIRMED') return 'intention-confirmed';
+      if (upper === 'LIKELY') return 'intention-likely';
+      if (upper === 'UNLIKELY') return 'intention-unlikely';
+
+      return '';
+    }
+
+    function attachEditableHandlers() {
+      document.querySelectorAll('.conference-input').forEach(input => {
+        input.addEventListener('change', () => {
+          updateTeamField(
+            input.dataset.teamId,
+            'conference',
+            input.value
+          );
+        });
+      });
+
+      document.querySelectorAll('.intention-input').forEach(input => {
+        input.addEventListener('change', () => {
+          updateTeamField(
+            input.dataset.teamId,
+            'intention',
+            input.value
+          );
+
+          input.classList.remove(
+            'intention-confirmed',
+            'intention-likely',
+            'intention-unlikely'
+          );
+
+          const css = intentionClass(input.value);
+          if (css) input.classList.add(css);
+        });
+      });
+
+      document.querySelectorAll('.comments-input').forEach(input => {
+        input.addEventListener('input', () => {
+          updateTeamField(
+            input.dataset.teamId,
+            'comments',
+            input.value,
+            false
+          );
+        });
+      });
+
+      document.querySelectorAll('.contact-input').forEach(input => {
+        input.addEventListener('input', () => {
+          updateTeamField(
+            input.dataset.teamId,
+            'contact',
+            input.value,
+            false
+          );
+        });
+      });
+    }
+
+    function updateTeamField(teamId, field, value, rerender = false) {
+      const team = teams.find(item => item.id === teamId);
+
+      if (!team) return;
+
+      if (team[field] === value) return;
+
+      const beforeSnapshot = deepClone(teams);
+
+      team[field] = value;
+
+      undoStack.push(beforeSnapshot);
+
+      if (rerender) {
+        render();
+      }
+
+      updateControls();
+    }
+
+    function attachMoveHandlers() {
+      document.querySelectorAll('.move-select').forEach(select => {
+        select.addEventListener('change', () => {
+          moveTeam(
+            select.dataset.teamId,
+            select.value,
+            null
+          );
+        });
+      });
+    }
+
     function attachDragHandlers() {
       document
         .querySelectorAll('tbody tr[data-team-id]')
@@ -967,14 +1011,11 @@
             draggedTeamId = null;
             row.classList.remove('dragging');
 
-            document
-              .querySelectorAll('tbody')
-              .forEach(body =>
-                body.classList.remove('drag-over')
-              );
+            document.querySelectorAll('tbody').forEach(body =>
+              body.classList.remove('drag-over')
+            );
           });
         });
-
 
       document
         .querySelectorAll('tbody[data-division]')
@@ -1007,57 +1048,22 @@
               event.target.closest('tr[data-team-id]');
 
             const targetTeamId =
-              targetRow
-                ? targetRow.dataset.teamId
-                : null;
+              targetRow ? targetRow.dataset.teamId : null;
 
-            moveTeam(
-              teamId,
-              division,
-              targetTeamId
-            );
+            moveTeam(teamId, division, targetTeamId);
           });
         });
     }
 
-
-    /***************************************************************
-     * MOVE DROPDOWN
-     ***************************************************************/
-    function attachMoveHandlers() {
-      document
-        .querySelectorAll('.move-select')
-        .forEach(select => {
-
-          select.addEventListener('change', () => {
-            moveTeam(
-              select.dataset.teamId,
-              select.value,
-              null
-            );
-          });
-        });
-    }
-
-
-    /***************************************************************
-     * MOVE TEAM
-     ***************************************************************/
     function moveTeam(teamId, newDivision, beforeTeamId) {
-      const team = teams.find(
-        item => item.id === teamId
-      );
+      const team = teams.find(item => item.id === teamId);
 
       if (!team) return;
 
       const beforeSnapshot = deepClone(teams);
-
       const oldDivision = team.division;
 
-      if (
-        oldDivision === newDivision &&
-        !beforeTeamId
-      ) {
+      if (oldDivision === newDivision && !beforeTeamId) {
         return;
       }
 
@@ -1104,7 +1110,6 @@
       );
     }
 
-
     function reindexDivision(division) {
       const list = teams
         .filter(team => team.division === division)
@@ -1115,10 +1120,6 @@
       });
     }
 
-
-    /***************************************************************
-     * UNDO
-     ***************************************************************/
     function undoLast() {
       if (!undoStack.length) return;
 
@@ -1127,13 +1128,9 @@
       render();
       updateControls();
 
-      showToast('Last move undone');
+      showToast('Last change undone');
     }
 
-
-    /***************************************************************
-     * DISCARD
-     ***************************************************************/
     function discardChanges() {
       if (!hasChanges()) return;
 
@@ -1152,10 +1149,6 @@
       showToast('Changes discarded');
     }
 
-
-    /***************************************************************
-     * SAVE
-     ***************************************************************/
     async function saveChanges() {
       if (!hasChanges() || isSaving) return;
 
@@ -1169,9 +1162,12 @@
           action: 'saveTeams',
           teams: teams.map(team => ({
             id: team.id,
-            team: team.team,
             division: team.division,
-            order: team.order
+            order: team.order,
+            conference: team.conference,
+            intention: team.intention,
+            comments: team.comments,
+            contact: team.contact
           }))
         };
 
@@ -1184,15 +1180,7 @@
           body: JSON.stringify(payload)
         });
 
-        /*
-         * Apps Script + GitHub Pages can require no-cors for POST.
-         * That means the browser cannot directly read the response.
-         *
-         * We therefore reload the API after the save and verify that
-         * the stored division/order state matches what we submitted.
-         */
-
-        await sleep(900);
+        await sleep(1000);
 
         const verifyResponse = await fetch(
           API_URL + '?action=getTeams&_=' + Date.now()
@@ -1202,17 +1190,17 @@
 
         if (!verifyData.success) {
           throw new Error(
-            verifyData.error || 'Save verification failed.'
+            verifyData.error ||
+            'Save verification failed.'
           );
         }
 
         const serverTeams =
           normaliseTeamList(verifyData.teams || []);
 
-        if (!sameDivisionState(teams, serverTeams)) {
+        if (!sameTeamState(teams, serverTeams)) {
           throw new Error(
-            'The save request was sent, but the stored team order ' +
-            'does not match the portal yet.'
+            'The save was sent, but the stored data does not match the portal yet.'
           );
         }
 
@@ -1241,10 +1229,7 @@
 
         statusLine.textContent = 'Save failed';
 
-        showToast(
-          'Save failed',
-          'error'
-        );
+        showToast('Save failed', 'error');
 
       } finally {
         isSaving = false;
@@ -1252,46 +1237,36 @@
       }
     }
 
-
-    /***************************************************************
-     * CHECK FOR CHANGES
-     ***************************************************************/
     function hasChanges() {
-      return !sameDivisionState(
+      return !sameTeamState(
         teams,
         originalTeams
       );
     }
 
+    function sameTeamState(listA, listB) {
+      const cleanA = comparableList(listA);
+      const cleanB = comparableList(listB);
 
-    function sameDivisionState(listA, listB) {
-      const a = listA
-        .map(team => ({
-          id: team.id,
-          division: team.division,
-          order: Number(team.order)
-        }))
-        .sort((x, y) =>
-          x.id.localeCompare(y.id)
-        );
-
-      const b = listB
-        .map(team => ({
-          id: team.id,
-          division: team.division,
-          order: Number(team.order)
-        }))
-        .sort((x, y) =>
-          x.id.localeCompare(y.id)
-        );
-
-      return JSON.stringify(a) === JSON.stringify(b);
+      return JSON.stringify(cleanA) === JSON.stringify(cleanB);
     }
 
+    function comparableList(list) {
+      return list
+        .map(team => ({
+          id: team.id,
+          division: team.division,
+          order: Number(team.order),
+          conference: team.conference || '',
+          intention: team.intention || '',
+          comments: team.comments || '',
+          contact: team.contact || ''
+        }))
+        .sort((a, b) =>
+          a.id.localeCompare(b.id)
+        );
+    }
 
-    /***************************************************************
-     * CONTROLS
-     ***************************************************************/
     function updateControls() {
       const changed = hasChanges();
 
@@ -1323,33 +1298,40 @@
       }
     }
 
-
     function countChangedTeams() {
       const originalMap = {};
 
       originalTeams.forEach(team => {
         originalMap[team.id] =
-          team.division + '|' + team.order;
+          JSON.stringify({
+            division: team.division,
+            order: Number(team.order),
+            conference: team.conference || '',
+            intention: team.intention || '',
+            comments: team.comments || '',
+            contact: team.contact || ''
+          });
       });
 
       return teams.filter(team => {
-        return (
-          originalMap[team.id] !==
-          team.division + '|' + team.order
-        );
+        const current = JSON.stringify({
+          division: team.division,
+          order: Number(team.order),
+          conference: team.conference || '',
+          intention: team.intention || '',
+          comments: team.comments || '',
+          contact: team.contact || ''
+        });
+
+        return originalMap[team.id] !== current;
       }).length;
     }
 
-
-    /***************************************************************
-     * HELPERS
-     ***************************************************************/
     function getDivisionTeams(division) {
       return teams
         .filter(team => team.division === division)
         .sort(sortTeams);
     }
-
 
     function sortTeams(a, b) {
       const divA = DIVISIONS.findIndex(
@@ -1375,7 +1357,6 @@
         .localeCompare(String(b.team));
     }
 
-
     function displayDivision(key) {
       const found = DIVISIONS.find(
         div => div.key === key
@@ -1384,18 +1365,15 @@
       return found ? found.label : key;
     }
 
-
     function deepClone(value) {
       return JSON.parse(JSON.stringify(value));
     }
-
 
     function sleep(ms) {
       return new Promise(resolve =>
         setTimeout(resolve, ms)
       );
     }
-
 
     function escapeHtml(value) {
       return String(value ?? '')
@@ -1405,7 +1383,6 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
     }
-
 
     function setError(message) {
       if (!message) {
@@ -1417,7 +1394,6 @@
       errorPanel.textContent = message;
       errorPanel.classList.add('show');
     }
-
 
     let toastTimer = null;
 
@@ -1440,10 +1416,6 @@
       }, 2500);
     }
 
-
-    /***************************************************************
-     * EVENTS
-     ***************************************************************/
     searchInput.addEventListener('input', render);
 
     refreshBtn.addEventListener('click', () => {
@@ -1469,10 +1441,6 @@
       event.returnValue = '';
     });
 
-
-    /***************************************************************
-     * START
-     ***************************************************************/
     loadTeams();
   </script>
 </body>
