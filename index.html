@@ -1539,6 +1539,42 @@ const API_URL =
   'https://script.google.com/macros/s/AKfycbweLNRiMQMu1nMlvKMTsJmur_NrMU688qqWaxzxR2qMMWUVS6FXcuaZvDpfZJoeXdrB/exec';
 
 
+/*
+ * The frontend refuses to save unless the deployed Apps Script
+ * reports this exact version. This prevents an old deployment
+ * from silently running older/destructive save code.
+ */
+const REQUIRED_BACKEND_VERSION = 'atomic-row-v2';
+
+async function assertBackendVersion() {
+  const response = await fetch(
+    API_URL + '?action=ping&_=' + Date.now()
+  );
+
+  if (!response.ok) {
+    throw new Error('Unable to verify Apps Script deployment.');
+  }
+
+  const data = await response.json();
+
+  if (!data.success) {
+    throw new Error(data.error || 'Apps Script ping failed.');
+  }
+
+  if (data.version !== REQUIRED_BACKEND_VERSION) {
+    throw new Error(
+      'BACKEND DEPLOYMENT IS OUT OF DATE. Expected ' +
+      REQUIRED_BACKEND_VERSION +
+      ' but received ' +
+      (data.version || 'no version') +
+      '. Redeploy Code.gs before using Save Changes.'
+    );
+  }
+
+  return true;
+}
+
+
 /************************************************************
  * DIVISIONS
  *
@@ -1991,6 +2027,8 @@ async function loadTeams() {
 
 
   try {
+
+    await assertBackendVersion();
 
 
     const response =
@@ -3680,6 +3718,12 @@ async function saveChanges() {
 
 
   try {
+
+    /*
+     * Refuse to save if the /exec deployment is not the exact
+     * backend version that contains the atomic row-save fix.
+     */
+    await assertBackendVersion();
 
 
     const payload = {
