@@ -1261,6 +1261,184 @@ textarea.field {
 
 }
 
+
+
+/************************************************************
+ * VIEW SWITCH / SCHEDULE PLANNER
+ ************************************************************/
+
+.schedule-view[hidden] {
+  display: none !important;
+}
+
+.schedule-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+  padding: 10px 11px;
+  border: 1px solid #242424;
+  border-radius: 7px;
+  background: #090909;
+}
+
+.schedule-title {
+  color: var(--yellow);
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.schedule-subtitle {
+  margin-top: 2px;
+  color: #888;
+  font-size: 9px;
+}
+
+.schedule-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.schedule-warning-summary {
+  margin-bottom: 9px;
+  padding: 9px 11px;
+  border: 1px solid #7a6400;
+  border-radius: 6px;
+  background: #251f00;
+  color: #ffe47a;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.schedule-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #242424;
+  border-radius: 7px;
+  background: #080808;
+}
+
+.schedule-table {
+  width: 100%;
+  min-width: 1020px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.schedule-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px 6px;
+  background: #050505;
+  color: #aaa;
+  border-bottom: 2px solid var(--yellow);
+  text-align: center;
+  font-size: 8px;
+}
+
+.schedule-table td {
+  padding: 4px;
+  border-bottom: 1px solid #181818;
+  vertical-align: middle;
+}
+
+.schedule-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.schedule-round {
+  width: 56px;
+  text-align: center;
+  color: var(--yellow);
+  font-weight: 950;
+}
+
+.schedule-date {
+  width: 105px;
+}
+
+.schedule-week-type {
+  width: 96px;
+}
+
+.schedule-stage {
+  width: 145px;
+}
+
+.schedule-field {
+  width: 100%;
+  min-height: 29px;
+  padding: 4px 6px;
+  border: 1px solid #303030;
+  border-radius: 4px;
+  background: #0b0b0b;
+  color: #eee;
+  font-size: 9px;
+}
+
+.schedule-field:focus {
+  outline: none;
+  border-color: var(--yellow);
+}
+
+.schedule-row-double td:first-child,
+.schedule-row-bye td:first-child {
+  background: #2a2300;
+}
+
+.schedule-row-bye td:first-child {
+  background: #241010;
+}
+
+.schedule-clash {
+  background: #2b2400;
+  outline: 1px solid #8a7100;
+  outline-offset: -1px;
+}
+
+.schedule-cell-warning {
+  display: block;
+  margin-top: 3px;
+  color: #ffd95a;
+  font-size: 7.5px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.schedule-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 8px 0;
+  color: #888;
+  font-size: 9px;
+}
+
+.schedule-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border: 1px solid #333;
+  border-radius: 999px;
+  background: #0a0a0a;
+}
+
+@media (max-width: 700px) {
+  .schedule-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .schedule-actions {
+    width: 100%;
+  }
+}
+
 </style>
 
 </head>
@@ -1287,6 +1465,22 @@ textarea.field {
 
 
     <div class="actions">
+
+      <button
+        id="teamsViewBtn"
+        class="btn btn-primary"
+        type="button"
+      >
+        Teams
+      </button>
+
+      <button
+        id="scheduleViewBtn"
+        class="btn"
+        type="button"
+      >
+        Schedule Planner
+      </button>
 
       <span
         id="unsaved"
@@ -1354,32 +1548,67 @@ textarea.field {
   ></div>
 
 
-  <div class="toolbar">
+  <section id="teamView">
 
-    <input
-      id="search"
-      class="search"
-      placeholder="Search team, manager, ID, position, comments..."
-    >
+    <div class="toolbar">
+
+      <input
+        id="search"
+        class="search"
+        placeholder="Search team, manager, ID, position, comments..."
+      >
 
 
-    <div
-      id="status"
-      class="status"
-    >
-      Loading...
+      <div
+        id="status"
+        class="status"
+      >
+        Loading...
+      </div>
+
     </div>
 
-  </div>
 
+    <div id="content">
 
-  <div id="content">
+      <div class="loading">
+        Loading teams...
+      </div>
 
-    <div class="loading">
-      Loading teams...
     </div>
 
-  </div>
+  </section>
+
+
+  <section
+    id="scheduleView"
+    class="schedule-view"
+    hidden
+  >
+
+    <div class="schedule-toolbar">
+
+      <div>
+        <div class="schedule-title">Schedule Planner</div>
+        <div class="schedule-subtitle">Competition stage by A-League round. Double and Bye clashes are warnings only.</div>
+      </div>
+
+      <div class="schedule-actions">
+        <span id="scheduleUnsaved" class="unsaved">UNSAVED SCHEDULE</span>
+        <button id="scheduleDiscardBtn" class="btn" type="button" disabled>Discard</button>
+        <button id="scheduleRefreshBtn" class="btn" type="button">Refresh</button>
+        <button id="scheduleSaveBtn" class="btn btn-primary" type="button" disabled>Save Schedule</button>
+      </div>
+
+    </div>
+
+    <div id="scheduleWarningSummary" class="schedule-warning-summary" hidden></div>
+
+    <div id="scheduleContent">
+      <div class="loading">Loading schedule...</div>
+    </div>
+
+  </section>
 
 
 </main>
@@ -1544,7 +1773,7 @@ const API_URL =
  * reports this exact version. This prevents an old deployment
  * from silently running older/destructive save code.
  */
-const REQUIRED_BACKEND_VERSION = 'atomic-row-v2';
+const REQUIRED_BACKEND_VERSION = 'atomic-row-v3-schedule';
 
 async function assertBackendVersion() {
   const response = await fetch(
@@ -1723,6 +1952,61 @@ const INTENTIONS = [
 ];
 
 
+const WEEK_TYPES = [
+  'NORMAL',
+  'DOUBLE',
+  'BYE'
+];
+
+
+const SCHEDULE_OPTIONS = {
+
+  elizaCup: [
+    '',
+    ...Array.from({length:26}, (_,i) => 'RD ' + (i + 1))
+  ],
+
+  division2: [
+    '',
+    'NO H2H',
+    ...Array.from({length:22}, (_,i) => 'RD ' + (i + 1)),
+    'PLAYOFFS WEEK 1',
+    'PLAYOFFS WEEK 2',
+    'PLAYOFF FINALS'
+  ],
+
+  division3: [
+    '',
+    'NO H2H',
+    ...Array.from({length:22}, (_,i) => 'RD ' + (i + 1)),
+    'PLAYOFFS WEEK 1',
+    'PLAYOFFS WEEK 2',
+    'PLAYOFF FINALS'
+  ],
+
+  faCup: [
+    '',
+    'ROUND OF 64',
+    'ROUND OF 32',
+    'ROUND OF 16',
+    'Q - FINALS',
+    'SEMI FINALS',
+    'FINAL'
+  ],
+
+  ecl: [
+    '',
+    'MATCHDAY 1',
+    'MATCHDAY 2',
+    'MATCHDAY 3',
+    'Q - FINALS',
+    'SEMI FINALS',
+    'FINAL'
+  ]
+
+};
+
+
 /************************************************************
  * STATE
  ************************************************************/
@@ -1744,6 +2028,22 @@ let draggedId =
 
 
 let saving =
+  false;
+
+
+let activeView =
+  'teams';
+
+
+let schedule =
+  [];
+
+
+let originalSchedule =
+  [];
+
+
+let scheduleSaving =
   false;
 
 
@@ -1832,6 +2132,66 @@ const confirmAdd =
 const toast =
   document.getElementById(
     'toast'
+  );
+
+
+const teamView =
+  document.getElementById(
+    'teamView'
+  );
+
+
+const scheduleView =
+  document.getElementById(
+    'scheduleView'
+  );
+
+
+const teamsViewBtn =
+  document.getElementById(
+    'teamsViewBtn'
+  );
+
+
+const scheduleViewBtn =
+  document.getElementById(
+    'scheduleViewBtn'
+  );
+
+
+const scheduleContent =
+  document.getElementById(
+    'scheduleContent'
+  );
+
+
+const scheduleWarningSummary =
+  document.getElementById(
+    'scheduleWarningSummary'
+  );
+
+
+const scheduleUnsaved =
+  document.getElementById(
+    'scheduleUnsaved'
+  );
+
+
+const scheduleSaveBtn =
+  document.getElementById(
+    'scheduleSaveBtn'
+  );
+
+
+const scheduleDiscardBtn =
+  document.getElementById(
+    'scheduleDiscardBtn'
+  );
+
+
+const scheduleRefreshBtn =
+  document.getElementById(
+    'scheduleRefreshBtn'
   );
 
 
@@ -3932,6 +4292,563 @@ async function saveChanges() {
 }
 
 
+
+/************************************************************
+ * VIEW SWITCH
+ ************************************************************/
+
+function setActiveView(view) {
+
+  activeView =
+    view === 'schedule'
+      ? 'schedule'
+      : 'teams';
+
+
+  const onSchedule =
+    activeView === 'schedule';
+
+
+  teamView.hidden =
+    onSchedule;
+
+
+  scheduleView.hidden =
+    !onSchedule;
+
+
+  teamsViewBtn.classList.toggle(
+    'btn-primary',
+    !onSchedule
+  );
+
+
+  scheduleViewBtn.classList.toggle(
+    'btn-primary',
+    onSchedule
+  );
+
+
+  [
+    unsaved,
+    addTeamBtn,
+    undoBtn,
+    discardBtn,
+    refreshBtn,
+    saveBtn
+  ].forEach(element => {
+
+    element.style.display =
+      onSchedule
+        ? 'none'
+        : '';
+
+  });
+
+
+  if (
+    onSchedule &&
+    !schedule.length
+  ) {
+
+    loadSchedule();
+
+  }
+
+}
+
+
+/************************************************************
+ * SCHEDULE LOAD / RENDER
+ ************************************************************/
+
+async function loadSchedule() {
+
+  setError('');
+
+
+  scheduleContent.innerHTML =
+    '<div class="loading">Loading schedule...</div>';
+
+
+  try {
+
+    await assertBackendVersion();
+
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getSchedule&_=' +
+        Date.now()
+      );
+
+
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status);
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+      throw new Error(data.error || 'Unable to load schedule.');
+    }
+
+
+    schedule =
+      normaliseSchedule(data.schedule);
+
+
+    originalSchedule =
+      clone(schedule);
+
+
+    renderSchedule();
+
+
+    updateScheduleControls();
+
+  } catch (err) {
+
+    console.error(err);
+
+    setError(
+      'Unable to load schedule: ' +
+      err.message
+    );
+
+    scheduleContent.innerHTML =
+      '<div class="loading">Schedule load failed.</div>';
+
+  }
+
+}
+
+
+function normaliseSchedule(list) {
+
+  return (list || [])
+    .map(item => ({
+
+      round:
+        Number(item.round),
+
+      date:
+        String(item.date || '').trim(),
+
+      weekType:
+        WEEK_TYPES.includes(
+          String(item.weekType || '').trim().toUpperCase()
+        )
+          ? String(item.weekType).trim().toUpperCase()
+          : 'NORMAL',
+
+      elizaCup:
+        String(item.elizaCup || '').trim(),
+
+      division2:
+        String(item.division2 || '').trim(),
+
+      division3:
+        String(item.division3 || '').trim(),
+
+      faCup:
+        String(item.faCup || '').trim(),
+
+      ecl:
+        String(item.ecl || '').trim()
+
+    }))
+    .filter(item => Number.isInteger(item.round) && item.round > 0)
+    .sort((a,b) => a.round - b.round);
+
+}
+
+
+function scheduleOptions(field,current) {
+
+  const options =
+    [...(SCHEDULE_OPTIONS[field] || [])];
+
+
+  if (
+    current &&
+    !options.includes(current)
+  ) {
+    options.push(current);
+  }
+
+
+  return options
+    .map(value => `
+      <option
+        value="${escapeHtml(value)}"
+        ${value === current ? 'selected' : ''}
+      >
+        ${escapeHtml(value || '—')}
+      </option>
+    `)
+    .join('');
+
+}
+
+
+function scheduleHasClash(item) {
+
+  return (
+    item.weekType === 'DOUBLE' ||
+    item.weekType === 'BYE'
+  ) && (
+    !!item.faCup ||
+    !!item.ecl
+  );
+
+}
+
+
+function renderSchedule() {
+
+  const warnings =
+    schedule.filter(scheduleHasClash);
+
+
+  scheduleWarningSummary.hidden =
+    warnings.length === 0;
+
+
+  scheduleWarningSummary.textContent =
+    warnings.length
+      ? '⚠ ' + warnings.length +
+        ' round' + (warnings.length === 1 ? '' : 's') +
+        ' schedule FA Cup or ECL during a Double/Bye week. This is allowed, but should be reviewed.'
+      : '';
+
+
+  const rows =
+    schedule.map(item => {
+
+      const riskyWeek =
+        item.weekType === 'DOUBLE' ||
+        item.weekType === 'BYE';
+
+
+      const rowClass =
+        item.weekType === 'DOUBLE'
+          ? 'schedule-row-double'
+          : item.weekType === 'BYE'
+            ? 'schedule-row-bye'
+            : '';
+
+
+      const faClash =
+        riskyWeek && !!item.faCup;
+
+
+      const eclClash =
+        riskyWeek && !!item.ecl;
+
+
+      return `
+        <tr class="${rowClass}" data-round="${item.round}">
+
+          <td class="schedule-round">${item.round}</td>
+
+          <td class="schedule-date">
+            <input
+              class="schedule-field schedule-edit"
+              data-round="${item.round}"
+              data-field="date"
+              value="${escapeHtml(item.date)}"
+            >
+          </td>
+
+          <td class="schedule-week-type">
+            <select
+              class="schedule-field schedule-edit"
+              data-round="${item.round}"
+              data-field="weekType"
+            >
+              ${WEEK_TYPES.map(value => `
+                <option value="${value}" ${value === item.weekType ? 'selected' : ''}>
+                  ${value}
+                </option>
+              `).join('')}
+            </select>
+          </td>
+
+          ${buildScheduleStageCell(item,'elizaCup',false)}
+          ${buildScheduleStageCell(item,'division2',false)}
+          ${buildScheduleStageCell(item,'division3',false)}
+          ${buildScheduleStageCell(item,'faCup',faClash)}
+          ${buildScheduleStageCell(item,'ecl',eclClash)}
+
+        </tr>
+      `;
+
+    }).join('');
+
+
+  scheduleContent.innerHTML = `
+
+    <div class="schedule-legend">
+      <span class="schedule-pill">NORMAL = standard round</span>
+      <span class="schedule-pill">DOUBLE = A-League double round</span>
+      <span class="schedule-pill">BYE = A-League bye-affected round</span>
+      <span class="schedule-pill">⚠ FA Cup/ECL remains selectable on Double/Bye weeks</span>
+    </div>
+
+    <div class="schedule-table-wrap">
+      <table class="schedule-table">
+        <thead>
+          <tr>
+            <th class="schedule-round">Round</th>
+            <th class="schedule-date">Date</th>
+            <th class="schedule-week-type">Week Type</th>
+            <th class="schedule-stage">Eliza Cup</th>
+            <th class="schedule-stage">Division 2</th>
+            <th class="schedule-stage">Division 3</th>
+            <th class="schedule-stage">FA Cup</th>
+            <th class="schedule-stage">ECL</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+
+
+  document
+    .querySelectorAll('.schedule-edit')
+    .forEach(control => {
+
+      control.addEventListener('change', () => {
+
+        const round =
+          Number(control.dataset.round);
+
+        const field =
+          control.dataset.field;
+
+        const item =
+          schedule.find(row => row.round === round);
+
+        if (!item) return;
+
+        item[field] =
+          control.value;
+
+        renderSchedule();
+        updateScheduleControls();
+
+      });
+
+    });
+
+}
+
+
+function buildScheduleStageCell(item,field,warning) {
+
+  const labels = {
+    elizaCup: 'Eliza Cup',
+    division2: 'Division 2',
+    division3: 'Division 3',
+    faCup: 'FA Cup',
+    ecl: 'ECL'
+  };
+
+
+  return `
+    <td class="schedule-stage ${warning ? 'schedule-clash' : ''}">
+      <select
+        class="schedule-field schedule-edit"
+        data-round="${item.round}"
+        data-field="${field}"
+        aria-label="${labels[field]} round ${item.round}"
+      >
+        ${scheduleOptions(field,item[field])}
+      </select>
+      ${warning
+        ? '<span class="schedule-cell-warning">⚠ Scheduled on ' + escapeHtml(item.weekType) + ' week</span>'
+        : ''}
+    </td>
+  `;
+
+}
+
+
+function scheduleComparable(list) {
+
+  return normaliseSchedule(list)
+    .map(item => ({
+      round:item.round,
+      date:item.date,
+      weekType:item.weekType,
+      elizaCup:item.elizaCup,
+      division2:item.division2,
+      division3:item.division3,
+      faCup:item.faCup,
+      ecl:item.ecl
+    }));
+
+}
+
+
+function scheduleHasChanges() {
+
+  return JSON.stringify(scheduleComparable(schedule)) !==
+    JSON.stringify(scheduleComparable(originalSchedule));
+
+}
+
+
+function updateScheduleControls() {
+
+  const changed =
+    scheduleHasChanges();
+
+
+  scheduleSaveBtn.disabled =
+    !changed || scheduleSaving;
+
+
+  scheduleDiscardBtn.disabled =
+    !changed || scheduleSaving;
+
+
+  scheduleRefreshBtn.disabled =
+    scheduleSaving;
+
+
+  scheduleUnsaved.classList.toggle(
+    'show',
+    changed
+  );
+
+}
+
+
+function discardSchedule() {
+
+  if (!scheduleHasChanges()) return;
+
+
+  if (!confirm('Discard all unsaved schedule changes?')) return;
+
+
+  schedule =
+    clone(originalSchedule);
+
+
+  renderSchedule();
+  updateScheduleControls();
+
+}
+
+
+async function saveSchedule() {
+
+  if (
+    !scheduleHasChanges() ||
+    scheduleSaving
+  ) {
+    return;
+  }
+
+
+  scheduleSaving =
+    true;
+
+
+  updateScheduleControls();
+  setError('');
+
+
+  try {
+
+    await assertBackendVersion();
+
+
+    await fetch(
+      API_URL,
+      {
+        method:'POST',
+        mode:'no-cors',
+        headers:{
+          'Content-Type':'text/plain;charset=utf-8'
+        },
+        body:JSON.stringify({
+          action:'saveSchedule',
+          schedule:scheduleComparable(schedule)
+        })
+      }
+    );
+
+
+    await sleep(900);
+
+
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getSchedule&_=' +
+        Date.now()
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+      throw new Error(data.error || 'Schedule verification failed.');
+    }
+
+
+    const fresh =
+      normaliseSchedule(data.schedule);
+
+
+    if (
+      fresh.length !==
+      originalSchedule.length
+    ) {
+      throw new Error('Schedule safety check failed: round count changed after save.');
+    }
+
+
+    schedule =
+      fresh;
+
+
+    originalSchedule =
+      clone(fresh);
+
+
+    renderSchedule();
+    updateScheduleControls();
+    showToast('Schedule saved');
+
+  } catch (err) {
+
+    console.error(err);
+    setError('Schedule save failed: ' + err.message);
+
+  } finally {
+
+    scheduleSaving =
+      false;
+
+    updateScheduleControls();
+
+  }
+
+}
+
+
 /************************************************************
  * UNSAVED STATE
  ************************************************************/
@@ -4532,7 +5449,8 @@ window.addEventListener(
 
 
     if (
-      !hasChanges()
+      !hasChanges() &&
+      !scheduleHasChanges()
     ) {
 
       return;
@@ -4550,11 +5468,51 @@ window.addEventListener(
 );
 
 
+
+
+teamsViewBtn.addEventListener(
+  'click',
+  () => setActiveView('teams')
+);
+
+
+scheduleViewBtn.addEventListener(
+  'click',
+  () => setActiveView('schedule')
+);
+
+
+scheduleSaveBtn.addEventListener(
+  'click',
+  saveSchedule
+);
+
+
+scheduleDiscardBtn.addEventListener(
+  'click',
+  discardSchedule
+);
+
+
+scheduleRefreshBtn.addEventListener(
+  'click',
+  () => {
+    if (
+      scheduleHasChanges() &&
+      !confirm('Discard unsaved schedule changes and refresh?')
+    ) {
+      return;
+    }
+    loadSchedule();
+  }
+);
+
 /************************************************************
  * START
  ************************************************************/
 
 loadTeams();
+setActiveView('teams');
 
 </script>
 
