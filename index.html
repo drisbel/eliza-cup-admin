@@ -1275,9 +1275,9 @@ textarea.field {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 9px;
-  padding: 10px 11px;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding: 9px 10px;
   border: 1px solid #242424;
   border-radius: 7px;
   background: #090909;
@@ -1285,14 +1285,14 @@ textarea.field {
 
 .schedule-title {
   color: var(--yellow);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 950;
 }
 
 .schedule-subtitle {
   margin-top: 2px;
-  color: #888;
-  font-size: 9px;
+  color: #999;
+  font-size: 10px;
 }
 
 .schedule-actions {
@@ -1303,14 +1303,15 @@ textarea.field {
 }
 
 .schedule-warning-summary {
-  margin-bottom: 9px;
+  margin-bottom: 8px;
   padding: 9px 11px;
-  border: 1px solid #7a6400;
+  border: 1px solid #8a7100;
   border-radius: 6px;
-  background: #251f00;
+  background: #2a2300;
   color: #ffe47a;
-  font-size: 10px;
-  font-weight: 800;
+  font-size: 10.5px;
+  font-weight: 850;
+  text-align: center;
 }
 
 .schedule-table-wrap {
@@ -1323,7 +1324,7 @@ textarea.field {
 
 .schedule-table {
   width: 100%;
-  min-width: 1020px;
+  min-width: 860px;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -1332,18 +1333,32 @@ textarea.field {
   position: sticky;
   top: 0;
   z-index: 2;
-  padding: 8px 6px;
+  padding: 7px 4px;
   background: #050505;
-  color: #aaa;
+  color: #bdbdbd;
   border-bottom: 2px solid var(--yellow);
   text-align: center;
-  font-size: 8px;
+  vertical-align: middle;
+  font-size: 9.5px;
+  font-weight: 950;
+  letter-spacing: .2px;
 }
 
 .schedule-table td {
-  padding: 4px;
-  border-bottom: 1px solid #181818;
+  padding: 3px;
+  border-bottom: 1px solid #1b1b1b;
+  border-right: 1px solid #141414;
   vertical-align: middle;
+  text-align: center;
+}
+
+.schedule-table td:last-child,
+.schedule-table th:last-child {
+  border-right: 0;
+}
+
+.schedule-table tbody tr:hover td {
+  background-color: rgba(255,255,255,.025);
 }
 
 .schedule-table tr:last-child td {
@@ -1351,52 +1366,120 @@ textarea.field {
 }
 
 .schedule-round {
-  width: 56px;
-  text-align: center;
+  width: 48px;
+  text-align: center !important;
   color: var(--yellow);
+  font-size: 11px;
   font-weight: 950;
 }
 
 .schedule-date {
-  width: 105px;
+  width: 86px;
+  text-align: center !important;
 }
 
 .schedule-week-type {
-  width: 96px;
+  width: 82px;
+  text-align: center !important;
 }
 
 .schedule-stage {
-  width: 145px;
+  width: 116px;
+  text-align: center !important;
 }
 
 .schedule-field {
   width: 100%;
-  min-height: 29px;
-  padding: 4px 6px;
+  min-height: 30px;
+  padding: 4px 5px;
   border: 1px solid #303030;
-  border-radius: 4px;
+  border-radius: 5px;
   background: #0b0b0b;
-  color: #eee;
-  font-size: 9px;
+  color: #f0f0f0;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-align: center;
+  text-align-last: center;
 }
 
 .schedule-field:focus {
   outline: none;
   border-color: var(--yellow);
+  box-shadow: 0 0 0 1px rgba(255,221,0,.18);
 }
 
-.schedule-row-double td:first-child,
-.schedule-row-bye td:first-child {
-  background: #2a2300;
+/* Week type colouring */
+.schedule-field.week-normal {
+  background: #111;
+  color: #d5d5d5;
 }
 
-.schedule-row-bye td:first-child {
-  background: #241010;
+.schedule-field.week-double {
+  background: #5b4700;
+  border-color: #9e7a00;
+  color: #fff0a8;
+}
+
+.schedule-field.week-bye {
+  background: #571b1b;
+  border-color: #8c3030;
+  color: #ffd0d0;
+}
+
+.schedule-row-double > td:first-child {
+  background: #4a3a00;
+}
+
+.schedule-row-bye > td:first-child {
+  background: #4b1717;
+}
+
+/* Stage colouring */
+.schedule-field.stage-empty {
+  background: #242424;
+  border-color: #333;
+  color: #8d8d8d;
+}
+
+.schedule-field.stage-eliza {
+  background: #1d315f;
+  border-color: #38548f;
+  color: #e9f0ff;
+}
+
+.schedule-field.stage-div2 {
+  background: #5c1f1d;
+  border-color: #8d3531;
+  color: #ffe4e3;
+}
+
+.schedule-field.stage-div3 {
+  background: #204116;
+  border-color: #38672a;
+  color: #e5f7df;
+}
+
+.schedule-field.stage-fa {
+  background: #5a3900;
+  border-color: #8b5a05;
+  color: #ffe3a8;
+}
+
+.schedule-field.stage-ecl {
+  background: #3c285d;
+  border-color: #624492;
+  color: #eee2ff;
+}
+
+.schedule-field.stage-playoff,
+.schedule-field.stage-final {
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
+  font-weight: 950;
 }
 
 .schedule-clash {
-  background: #2b2400;
-  outline: 1px solid #8a7100;
+  background: #302800 !important;
+  outline: 1px solid #957900;
   outline-offset: -1px;
 }
 
@@ -1404,29 +1487,37 @@ textarea.field {
   display: block;
   margin-top: 3px;
   color: #ffd95a;
-  font-size: 7.5px;
+  font-size: 8px;
   font-weight: 900;
-  line-height: 1.2;
+  line-height: 1.15;
+  text-align: center;
 }
 
 .schedule-legend {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 7px;
-  margin: 8px 0;
-  color: #888;
-  font-size: 9px;
+  gap: 6px;
+  margin: 7px 0;
+  color: #999;
+  font-size: 9.5px;
 }
 
 .schedule-pill {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   padding: 3px 7px;
   border: 1px solid #333;
   border-radius: 999px;
   background: #0a0a0a;
 }
+
+.schedule-pill-normal { border-color: #444; }
+.schedule-pill-double { border-color: #8f7000; color: #ffe47a; background: #292100; }
+.schedule-pill-bye { border-color: #843131; color: #ffb7b7; background: #2b1111; }
+.schedule-pill-warning { border-color: #8f7000; color: #ffe47a; }
 
 @media (max-width: 700px) {
   .schedule-toolbar {
@@ -1436,6 +1527,10 @@ textarea.field {
 
   .schedule-actions {
     width: 100%;
+  }
+
+  .schedule-table {
+    min-width: 860px;
   }
 }
 
@@ -4567,7 +4662,7 @@ function renderSchedule() {
 
           <td class="schedule-week-type">
             <select
-              class="schedule-field schedule-edit"
+              class="schedule-field schedule-edit ${weekTypeClass(item.weekType)}"
               data-round="${item.round}"
               data-field="weekType"
             >
@@ -4594,10 +4689,10 @@ function renderSchedule() {
   scheduleContent.innerHTML = `
 
     <div class="schedule-legend">
-      <span class="schedule-pill">NORMAL = standard round</span>
-      <span class="schedule-pill">DOUBLE = A-League double round</span>
-      <span class="schedule-pill">BYE = A-League bye-affected round</span>
-      <span class="schedule-pill">⚠ FA Cup/ECL remains selectable on Double/Bye weeks</span>
+      <span class="schedule-pill schedule-pill-normal">NORMAL</span>
+      <span class="schedule-pill schedule-pill-double">DOUBLE</span>
+      <span class="schedule-pill schedule-pill-bye">BYE</span>
+      <span class="schedule-pill schedule-pill-warning">⚠ FA Cup/ECL warnings only</span>
     </div>
 
     <div class="schedule-table-wrap">
@@ -4650,6 +4745,47 @@ function renderSchedule() {
 }
 
 
+function weekTypeClass(value) {
+
+  const text =
+    String(value || '').trim().toUpperCase();
+
+  if (text === 'DOUBLE') return 'week-double';
+  if (text === 'BYE') return 'week-bye';
+  return 'week-normal';
+
+}
+
+
+function scheduleStageClass(field,value) {
+
+  const text =
+    String(value || '').trim().toUpperCase();
+
+  if (!text || text === '-' || text === '—' || text === 'NO H2H') {
+    return 'stage-empty';
+  }
+
+  const competitionClass = {
+    elizaCup: 'stage-eliza',
+    division2: 'stage-div2',
+    division3: 'stage-div3',
+    faCup: 'stage-fa',
+    ecl: 'stage-ecl'
+  }[field] || '';
+
+  const emphasis =
+    text.includes('FINAL')
+      ? ' stage-final'
+      : text.includes('PLAYOFF')
+        ? ' stage-playoff'
+        : '';
+
+  return competitionClass + emphasis;
+
+}
+
+
 function buildScheduleStageCell(item,field,warning) {
 
   const labels = {
@@ -4664,7 +4800,7 @@ function buildScheduleStageCell(item,field,warning) {
   return `
     <td class="schedule-stage ${warning ? 'schedule-clash' : ''}">
       <select
-        class="schedule-field schedule-edit"
+        class="schedule-field schedule-edit ${scheduleStageClass(field,item[field])}"
         data-round="${item.round}"
         data-field="${field}"
         aria-label="${labels[field]} round ${item.round}"
